@@ -22,7 +22,7 @@ function App() {
   const history = useHistory();
   const [showLogout, setShowLogout] = useState(false);
   const [showLogin,setShowLogin] = useState(true);
-  const [user,setUser] = useState(false);
+  const [userSignedIn,setUserSignedIn] = useState(false);
 
   const getUser = async () =>{
   
@@ -33,8 +33,8 @@ function App() {
         url: "http://localhost:8000/user",
       }).then((res) => {console.log(res.data);
         //check if user logged in 
-       if(res.data!=user){
-          setUser(true);
+       if(res.data!=userSignedIn){
+          setUserSignedIn(true);
           //set user information
         setItems(res.data);
         //console.log(res.data);

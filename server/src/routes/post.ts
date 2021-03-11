@@ -3,11 +3,11 @@ import * as express from 'express';
 const router=express.Router();
 const user=require('../model/user');
 const passport=require('passport');
+const verifyPost=require('./middleware/verifyPost');
 
 
 
-
-router.post('/add-blog',async (req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.post('/add-blog',verifyPost,async (req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     //get user
 
    const user=req.body['user'];

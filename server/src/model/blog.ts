@@ -12,6 +12,7 @@ required:true
 },
 user:{
     type:String,
+    required:true
     
 },
 date:{
@@ -19,7 +20,8 @@ date:{
     
 },
 body:{
-    type:String
+    type:String,
+    required:true
 }
 
 });

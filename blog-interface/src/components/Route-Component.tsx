@@ -53,6 +53,7 @@ class Routes extends React.Component {
             exact path="/admin-manage"
             component={AdminManage}>
               </Route>
+              
             
        
       </Switch>

@@ -3,10 +3,11 @@ const router=express.Router();
 const user=require('../model/user');
 const passport=require('passport');
 import bcrypt from 'bcrypt';
+const verifyUser=require('./middleware/verifyUser');
 
 
 
-router.post('/add-user',async(req: express.Request, resp: express.Response, next: express.NextFunction) => {
+router.post('/add-user',verifyUser,async(req: express.Request, resp: express.Response, next: express.NextFunction) => {
     var userRole="user";
    user.findOne({username:req.body.username},async(err,doc)=>{
        if(err) throw err;
@@ -69,7 +70,7 @@ router.put('/change-username/:id',async(req: express.Request, resp: express.Resp
 
 });
 
-router.post('/login',async(req: express.Request, resp: express.Response, next:express.NextFunction)=>{
+router.post('/login',verifyUser,async(req: express.Request, resp: express.Response, next:express.NextFunction)=>{
     passport.authenticate("local", (err, user, info) => {
         if (err) throw err;
         if (!user) resp.send("No User Exists");
