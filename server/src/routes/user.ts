@@ -4,7 +4,7 @@ const user=require('../model/user');
 const passport=require('passport');
 import bcrypt from 'bcrypt';
 const verifyUser=require('./middleware/verifyUser');
-
+const createJwt=require('../token/createJWT');
 
 
 router.post('/add-user',verifyUser,async(req: express.Request, resp: express.Response, next: express.NextFunction) => {
@@ -103,6 +103,30 @@ router.get('/get-username/:id',(req: express.Request, resp: express.Response, ne
    const id = req.params['id'];
    
     });
+
+
+    //JWT routes 
+router.post('/login_JWT',(req:express.Request, resp: express.Response, next: express.NextFunction)=>{
+
+})
+router.post('/add-user_JWT',(req:express.Request, resp: express.Response, next: express.NextFunction)=>{
+    var userRole="user";
+    // check if there an existing user with the same username 
+    user.findOne({username:req.body.username},async(err,doc)=>{
+        if(err) throw err;
+        if(doc)resp.send("user exist already");
+     if(!doc){
+     const hashPassword=await bcrypt.hash(req.body.password,10);
+     const addUser=new user({name:req.body.name,username:req.body.username,password:hashPassword,role:req.body=userRole});
+     await addUser.save();
+     //const jwtToken = createJWT()
+         resp.send("user created");
+         resp.end();
+     }
+     
+    });
+ 
+})
     
     
     
