@@ -18,6 +18,7 @@ const ProtectedRoute = (props: route) => {
     )
   }
   */
+ 
 
  const ProtectedRoute = (props:route) => {
    const { component: Component, ...rest }=props;

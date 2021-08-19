@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, {  useEffect, useState } from "react";
+import Auth from '../components/Auth';
 import {
     BrowserRouter as Router,
     Switch,
@@ -51,6 +52,7 @@ function Manage(){
             <div>
            {checkAdmin ? <AdminManageLink/>:null}
             </div>
+            
         </div>
     )
 }

@@ -1,9 +1,8 @@
 import React, { Component, useEffect, useState } from "react";
-import LogoutComponent from './components/Logout';
 import RoutesSwitch from './components/Route-Component';
+import AdminBar from './components/AdminBar';
 import './index';
 import ProtectedRoute from './ProtectedRoute';
-import Manage from './user/Manage';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,6 +12,7 @@ import {
   useHistory
 } from "react-router-dom";
 import axios from 'axios';
+import { Container,Row,Col } from 'react-bootstrap';
 
 
 
@@ -43,22 +43,17 @@ function App() {
         setShowLogout(true);
       
        }
-       
-        
-        
-       
       });
     }catch(err) {
       console.error(err.message);
     }
-
-    
   }
    //console.log(user);
 
   const LoginLink=()=> <div> 
   <Link to="/login">Login</Link>
   </div>;
+  
   const ManageLink=()=> <div> 
     <Router> 
    
@@ -78,30 +73,30 @@ function App() {
   return (
     <Router>
       <div>
-      <div >
-        {showLogout ? <h1>Welcome {item?.name}</h1>:null}
-       </div>
+        <div className="header">
+          <h1>Nya Website</h1>
+        </div>
 
-    <div>
-        <nav>
-                {showLogout ? <ManageLink/>:null}
-        
-              <Link to="/home">Home</Link>
-          
-                <Link to="/about-me">About Me</Link>
-          
-                {showLogin ? <LoginLink/>:null}
-              
-                <Link to="/blog">Blog</Link>
-            
-             {showLogout ? <LogoutComponent/>:null}
-            
+    
+    <div className="topnav">
+      <nav>
+             
+          <a> <Link to="/home">Home</Link> </a>
+          <a> <Link to="/about-me">About Me</Link></a>
+                 <a><Link to="/Coming-Soon">Blog</Link> </a> 
+         
         </nav>
     </div>
-        
+    <div>
+      {showLogout?<AdminBar/>:null}
+    </div>
+    <div >
+        {showLogout ? <h1>Welcome {item?.name}</h1>:null}
+       </div>
+    
       </div>
+      
       <RoutesSwitch/>
-     
     </Router>
   )};
  

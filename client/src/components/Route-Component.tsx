@@ -1,6 +1,6 @@
 
 import React from 'react';
-
+import axios from 'axios';
 import home from '../home';
 import aboutMe from '../about-me';
 import viewBlog from'../blog/blog-view';
@@ -10,13 +10,16 @@ import manage from '../user/Manage';
 import blogEntry from '../blog/blog-entry';
 import AdminManage from '../user/Admin-Manage';
 import ProtectedRoute from '../ProtectedRoute';
+import comingSoon from '../temp/comingSoon';
+
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     Link,
     useParams,
-    useHistory
+    useHistory, 
+    Redirect
   } from "react-router-dom";
   
 class Routes extends React.Component {
@@ -25,6 +28,13 @@ class Routes extends React.Component {
       return(   
         <div> 
  <Switch>
+ <Route
+                      exact
+                      path="/"
+                      render={() => {
+                        return <Redirect to="/home" />;
+                      }}
+                    /> 
         <Route 
         exact path="/home"
         component={home}> 
@@ -53,7 +63,10 @@ class Routes extends React.Component {
             exact path="/admin-manage"
             component={AdminManage}>
               </Route>
-              
+              <Route
+            exact path="/Coming-Soon"
+            component={comingSoon}>
+              </Route>
             
        
       </Switch>
