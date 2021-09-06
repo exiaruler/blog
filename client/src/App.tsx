@@ -12,7 +12,6 @@ import {
   useHistory
 } from "react-router-dom";
 import axios from 'axios';
-import { Container,Row,Col } from 'react-bootstrap';
 
 
 
@@ -73,18 +72,15 @@ function App() {
   return (
     <Router>
       <div>
-        <div className="header">
-          <h1>Nya Website</h1>
-        </div>
-
     
-    <div className="topnav">
+    <div className="">
       <nav>
-             
-          <a> <Link to="/home">Home</Link> </a>
-          <a> <Link to="/about-me">About Me</Link></a>
-                 <a><Link to="/Coming-Soon">Blog</Link> </a> 
-         
+        <li className="nav">
+          <li>  <a> <Link to="/home">Home</Link> </a>    </li>
+          <li>  <a> <Link to="/about-me">About Me</Link></a></li>
+          <li>     <a><Link to="/Coming-Soon">Blog</Link> </a> </li>
+        </li>
+          
         </nav>
     </div>
     <div>

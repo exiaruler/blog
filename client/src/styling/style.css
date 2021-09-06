@@ -1,15 +1,28 @@
 
  
-  .header {
-    background-color:whitesmoke;
-    padding: 20px;
+ 
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
     text-align: center;
   }
   
   .disclaimer {
-    background-color: #F1F1F1;
+    background-color: #f8ceceaf;
     text-align: center;
     padding: 10px;
+   
+  }
+  .disclaimer p{
+    font-size: 15px;
+  }
+
+  .social-icons{
+    display:inline-block;
+    
   }
 
   .content {
@@ -18,9 +31,22 @@
     align-items: center;
     height: 200px;
     border: 3px solid green; 
-  
-    
   }
+
+  .container {
+    height: 200px;
+    position: relative;
+   
+  }
+  .center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  
   /* Create three equal columns that floats next to each other */
 .column {
   float: left;
@@ -41,9 +67,15 @@
     width: 100%;
   }
 }
-  
+  .title{
+    text-align: center;
+    font-size:25px ;
+  }
+  .welcomeColour{
+    color: rgb(57, 158, 224);
+  }
   body{
-    background-color:lightcyan;
+    background-color:whitesmoke;
   }
   p{
     font-size:18px;
@@ -82,10 +114,11 @@
 
 
   /* nav bar */
-
+  
   .topnav {
     overflow:hidden;
-    background-color: rgb(25, 67, 252);
+    background-color:rgb(73, 156, 230);
+    position: relative;
     
   }
   
@@ -95,8 +128,9 @@
     text-align: center;
     padding: 12px 16px;
     text-decoration: none;
-    font-size: 19px;
+    font-size: 22px;
     font-weight:700;
+    display: inline;
   }
   
   .topnav a:hover {
@@ -104,3 +138,53 @@
     color: white;
   }
   
+  .topnav-centered a {
+    float: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .topnav-right {
+    float: right;
+  }
+
+  @media screen and (max-width: 600px) {
+    .topnav a, .topnav-right {
+      float: none;
+      display: block;
+    }
+  
+    .topnav-centered a {
+      position: relative;
+      top: 0;
+      left: 0;
+      transform: none;
+    }
+  }
+
+  /* navbar 2.0 */
+  .nav{
+    border:1px solid #ccc;
+    border-width:1px 0;
+    list-style:none;
+    margin:0;
+    padding:0;
+    text-align:center;
+    background-color:rgb(73, 156, 230);
+}
+.nav li{
+    display:inline;
+}
+.nav a{
+    display:inline-block;
+    padding: 12px 16px;
+    text-decoration: none;
+    font-size: 22px;
+    font-weight:700;
+    color: #f2f2f2;
+}
+.nav a:hover {
+  background-color:rgb(3, 23, 90);
+  color: white;
+}

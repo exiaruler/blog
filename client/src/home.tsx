@@ -37,18 +37,23 @@ function Home() {
       <p>{item?.username}</p>
       <p>{item?.id}</p>
       <div className="column">
-      <h1>Welcome to my world!</h1>
-      <p>Welcome all to my page, this website contains links to my proffesional career and my hobbies</p>
-        <h2>Links</h2>
-        <h3>Cosplay</h3>
-      <a href="https://www.instagram.com/nya_cosplays/"><img src={insta} alt="instagram logo" width="300" height="300" /></a>
-      <h3>Figure Collection</h3>
-      <a href="https://www.instagram.com/nyafigurecollection/"><img src={insta} alt="instagram logo" width="300" height="300"/></a>
+        
+          <div className="title">
+          <h1 className="welcomeColour">Welcome to my website!</h1>
+          <p>Please browse freely through my page and social media links</p>
+          </div>
+      
+      
+    
+   
       </div>
       <div className="column"></div>
      
       </div>
+      <div className="footer">
       <Footer/>
+      </div>
+     
     
   </div>
   )
