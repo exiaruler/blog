@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 
   function BlogEntry() {
-    const [topic,setTopic]=useState("cosplay");
+  const [topic,setTopic]=useState("");
   const [body,setBody]=useState("");
   const [title,setTitle]=useState("");
-
+  const [user,setUser]=useState("");
+  const getUser = async () =>{
+    await axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:8000/user",
+    }).then((res) => {
+      setUser(res.data.name);
+    });
+  }
     const post=()=>{
       axios({
         method:"post",
@@ -13,18 +22,18 @@ import axios from 'axios';
           title:title,
       topic:topic,
        body:body,
-       
+       user:user
         },
         withCredentials:true,
         url:"http://localhost:8000/add-blog",
         
       }).then((resp)=>console.log(resp));
-
-      //console.log(userName,password);
     };
-    
-     //console.log(topic);
-    //console.log(body);
+
+    useEffect(() => {
+      getUser();
+      
+    }, []);
     return (
       
         <div>
@@ -41,7 +50,7 @@ import axios from 'axios';
           <option value="Projects">projects</option>
           </select>
          <label>body</label>
-         <input type="text" value={body} onChange={(e)=>setBody(e.target.value)}></input>
+         <textarea value={body} onChange={(e)=>setBody(e.target.value)}/>
          <input type="submit" ></input>
         
 

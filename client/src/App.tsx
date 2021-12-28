@@ -3,6 +3,8 @@ import RoutesSwitch from './components/Route-Component';
 import AdminBar from './components/AdminBar';
 import './index';
 import ProtectedRoute from './ProtectedRoute';
+import NavBar from "./components/NavBar";
+import NavBarMobile from "./components/mobile/NavBarMobile";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,9 +14,7 @@ import {
   useHistory
 } from "react-router-dom";
 import axios from 'axios';
-
-
-
+import {isMobile} from 'react-device-detect';
 
 function App() {
   const [item, setItems] = useState<any>(null);
@@ -22,7 +22,16 @@ function App() {
   const [showLogout, setShowLogout] = useState(false);
   const [showLogin,setShowLogin] = useState(true);
   const [userSignedIn,setUserSignedIn] = useState(false);
-
+  const [mobileNav,setMobileNav]=useState(false);
+  const [nav,setNav]=useState(false);
+  
+  const checkDevice=()=>{
+    if(isMobile){
+      setMobileNav(true);
+    }else{
+      setNav(true);
+    }
+  }
   const getUser = async () =>{
   
     try{
@@ -47,7 +56,8 @@ function App() {
       console.error(err.message);
     }
   }
-   //console.log(user);
+  
+  
 
   const LoginLink=()=> <div> 
   <Link to="/login">Login</Link>
@@ -64,34 +74,23 @@ function App() {
 //  <ProtectedRoute exact path='/manage' component={Manage} />
   useEffect(() => {
     getUser();
-    
-  }, []);
+    checkDevice();
+  },[]);
 
 
 
   return (
     <Router>
       <div>
-    
-    <div className="">
-      <nav>
-        <li className="nav">
-          <li>  <a> <Link to="/home">Home</Link> </a>    </li>
-          <li>  <a> <Link to="/about-me">About Me</Link></a></li>
-          <li>     <a><Link to="/Coming-Soon">Blog</Link> </a> </li>
-        </li>
-          
-        </nav>
-    </div>
+    { nav ?<NavBar/> :null }
+    {mobileNav? <NavBarMobile/>:null}
     <div>
       {showLogout?<AdminBar/>:null}
     </div>
     <div >
         {showLogout ? <h1>Welcome {item?.name}</h1>:null}
        </div>
-    
       </div>
-      
       <RoutesSwitch/>
     </Router>
   )};

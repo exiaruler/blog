@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useParams
-  } from "react-router-dom";
+
   import Footer from './components/Footer';
   function aboutme() {
     return (
@@ -18,7 +12,7 @@ import {
            
           <div className="column">
           <h1>About Me</h1>
-        <p>Hi my name is Samuel, I am a student that is currently studying at the University of Technology Sydney in Bachelor of science of IT majoring enterprise systems development. 
+        <p>Hi my name is Samuel, I am a graduate from University of Technology Sydney in Bachelor of science of IT majoring enterprise systems development. 
          My personal hobbies and interest are gaming, watching tv-series and anime and building stuff from electronics and gunpla.</p>
 
           <p> My career goal is working in software engineering in a full-stack role, with an interest in working in areas such as web development and iOS app development.

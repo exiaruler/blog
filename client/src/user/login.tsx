@@ -17,13 +17,6 @@ import axios, { AxiosResponse } from 'axios';
   
 
 
-  const onChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setUsername(e.target.value);  
-    setPassword(e.target.value);
-  };
-
-
-
     const loginUser= async (e: { preventDefault: () => void; })=>{
      e.preventDefault();
      try{

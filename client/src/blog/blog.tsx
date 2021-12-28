@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
 import axios from 'axios';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useParams
-  } from "react-router-dom";
   export interface BlogProps{}
 
   export interface Blog{
@@ -31,13 +23,8 @@ import {
         url: "http://localhost:8000/get-all-blog",
       }).then((res) => {
         setBlogs(res.data);
-       // console.log(res.data);
-        
-       
       });
     }
-  
-
     useEffect(() => {
    getBlogs();
       
