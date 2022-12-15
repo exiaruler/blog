@@ -4,12 +4,14 @@ const user=require('../model/user');
 const passport=require('passport');
 import bcrypt from 'bcrypt';
 import { isConstructorDeclaration } from 'typescript';
+import {UserController} from '../controller/UserController';
 const verifyUser=require('./middleware/verifyUser');
 const createJwt=require('../token/createJWT');
-
+const test= new UserController();
 
 router.post('/add-user',verifyUser,async(req: express.Request, resp: express.Response, next: express.NextFunction) => {
     var userRole="user";
+    
    user.findOne({username:req.body.username},async(err,doc)=>{
        if(err) throw err;
        if(doc)resp.send("user exist already");
@@ -85,10 +87,11 @@ router.post('/login',verifyUser,async(req: express.Request, resp: express.Respon
 
 
 
-router.get('/logout',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
-    req.logOut();
-    resp.clearCookie('connect.sid',{path:'/'});
-    resp.send("Logged out");
+router.post('/logout',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+    req.logOut(function(err){
+        resp.clearCookie('connect.sid',{path:'/'});
+        resp.send("Logged out");
+    });
 });
 
 router.get('/user',(req: express.Request, resp: express.Response, next: express.NextFunction)=>{

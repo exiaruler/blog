@@ -39,6 +39,9 @@ import BlogView from '../blog/blogview';
         withCredentials: true,
         url:api+page
       }).then((res) => {
+        if(res.data.limit==1){
+          setNextBtn(true);
+        }
         setPageMax(res.data.limit);
         setBlogs(res.data.output);
       });

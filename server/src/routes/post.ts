@@ -7,12 +7,14 @@ const user=require('../model/user');
 const passport=require('passport');
 import { send } from 'process';
 const verifyPost=require('./middleware/verifyPost');
+import { PostController } from '../controller/PostController';
 const key=require('../model/key');
 const Cryptr = require('cryptr');
 const cryptr = new Cryptr('secret');
 const fs = require('fs');
 var path = require('path');
 var multer = require('multer');
+const postController=new PostController();
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "./src/uploads")
@@ -121,6 +123,8 @@ function calculateLimit(page){
 }
 router.get('/get-a-blog/:id',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     const search = req.params['id'];
+    var test=postController.getBlog(search);
+    console.log(test);
     blog.findById(search)
     .exec()
     .then(doc=>{

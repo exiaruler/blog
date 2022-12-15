@@ -13,7 +13,7 @@ import {
 class Logout extends React.Component {
      logOut= async () => {
         await axios({
-          method: "GET",
+          method: "POST",
           withCredentials: true,
           url: "http://localhost:8000/logout"
         }).then((resp)=>console.log(resp));
