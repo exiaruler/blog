@@ -30,10 +30,11 @@ class Util{
     // converts date to show month style
     dateConversionMonth(date:any){
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        date=date.split("/");
+        const dateArr=date.split("/");
         var convertedDate=new Date(date);
         const month = months[convertedDate.getMonth()];
-        return date[1]+" "+month+" "+date[2]
+       // console.log(month);
+        return dateArr[1]+" "+month+" "+dateArr[2]
     }
     elementGet(elementId:any){
       const get=document.getElementById(elementId);
