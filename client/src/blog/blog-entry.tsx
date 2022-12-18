@@ -1,17 +1,10 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useRef } from 'react';
 import { useForm,SubmitHandler } from "react-hook-form";
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import { useHistory } from "react-router-dom";
-import {Editor, EditorState} from 'draft-js';
-import editorBody from '../components/EditorBody';
+import Footer from '../components/Footer';
 import 'draft-js/dist/Draft.css';
-type Post={
-  heading:string,
-  topic:string,
-  body:string,
-  image:File
-};
   function BlogEntry() {
   const [topic,setTopic]=useState("");
   const [body,setBody]=useState("");
@@ -34,12 +27,6 @@ type Post={
       }
       setUser(res.data.name);
     });
-  }
-  function resetError(){
-    setTitleError("");
-    setBodyError("");
-    setTopicError("");
-    
   }
   const onInputChangeFile=(e:any)=>{
     setImage(e.target.files[0]);
@@ -82,21 +69,20 @@ type Post={
       }
     }
     }
-    
-    
-    
     );
   };
     useEffect(() => {
       getUser();
-      
     },);
     return (
       
         <div>
-          <div>
+          <div className="row">
+          <div className="column">
+            </div>
+          <div className="column">
         <h1>Blog Entry</h1>
-        <div className=''>
+        <div className='column'>
           <p> <label>Heading</label>
           <input id='title-input' type="text" placeholder={titleError}   value={title} onChange={(e)=>setTitle(e.target.value)}/>
           </p>
@@ -119,12 +105,12 @@ type Post={
          <input type='file'  onChange={onInputChangeFile} name="image"/> 
         </p>
          <input type="submit" onClick={post} ></input>
-        
-       
          </div>
-        
         </div>
-       
+        <div className="column">
+            
+            </div>
+        </div>
         </div>
       
     

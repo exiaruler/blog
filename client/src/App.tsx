@@ -91,9 +91,6 @@ function App() {
     <div >
         {showLogout ? <h1>Welcome {item?.name}</h1>:null}
        </div>
-       <div className="footer">
-      <Footer/>
-      </div>
       </div>
       <RoutesSwitch/>
     </Router>

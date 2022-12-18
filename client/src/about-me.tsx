@@ -27,7 +27,9 @@ import React from 'react';
           <div className="column">
 
           </div>
-
+          <div className="footer" id="Footer">
+      <Footer/>
+      </div>
           </div>
       
          

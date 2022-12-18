@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import insta from './assets/insta.png';
 import axios from 'axios';
 import Footer from './components/Footer';
 import App from './App';
@@ -38,7 +37,9 @@ function Home() {
           </div>
       </div>
       <div className="column"></div>
-     
+      <div className="footer" id="Footer">
+        <Footer/>
+        </div>
       </div>
   
      

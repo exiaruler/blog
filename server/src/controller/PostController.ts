@@ -11,15 +11,36 @@ export class PostController{
             const currentDate=  date.getMonth()-1+ "/" + (date.getDate()) + "/" + date.getFullYear();
             const add=await new blog({title: title,topic:topic,user:user,body:body,date:currentDate,image:""}).save();
             if(add){
-                console.log(add);
                 res.status(200).send("success");
-
             }
         }catch(err){
-            res.status(200).send(err);
+            res.status(500).send(err);
         }
-
-    
+    }
+    async updatePost(req:Request,res:Response){
+        const id = req.params['id'];
+        const title=req.body['title']; 
+        const topic=req.body['topic'];
+        const body=req.body['body'];
+        try{
+            const update=await blog.findByIdAndUpdate(id,{"title": title,"topic":topic,"body":body});
+            if(update){
+                res.status(200).send("Update "+id);
+             }
+        }catch(err){
+            res.status(500).send(err.message);
+        }
+    }
+    async deletePost(req:Request,res:Response){
+        try{
+            const id = req.params['id'];
+            const remove= await blog.findByIdAndRemove(id);
+            if(remove){
+                res.status(200).send(id+" deleted");
+            }
+        }catch(err){
+            res.status(200).send("post does not exist");
+        }
     }
     async getAllPost(req:Request,res:Response){
         var page:any=req.params['page']; 

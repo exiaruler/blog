@@ -6,7 +6,6 @@
     left: 0;
     bottom: 0;
     width: 100%;
-
     text-align: center;
   }
   
@@ -320,8 +319,8 @@
   width: 95%;
 }
 .textarea{
-  width: 50%;
-  height: 90%;
+  width: 396px;
+  height: 229px;
 }
   
   

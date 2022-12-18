@@ -84,20 +84,11 @@ router.get('/get-blog-topic',async(req: express.Request, resp: express.Response,
 
     
 router.put('/edit-blog/:id',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
-    const id = req.params['id'];
-    const title=req.body['title']; 
-    const topic=req.body['topic'];
-    const body=req.body['body'];
-    await blog.findByIdAndUpdate(id,{"title": title,"topic":topic,"body":body});
-    resp.end();
-       
+    postContr.updatePost(req,resp);     
 });
 
 router.delete('/delete-blog/:id',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
-    const id = req.params['id'];
- 
-    await blog.findByIdAndRemove(id);
-    resp.end();
+    postContr.deletePost(req,resp);
 });
 
 router.delete('/delete-all',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
