@@ -1,33 +1,19 @@
 import axios from 'axios';
 //import {base} from './Base';
 class Util {
- // private base:BaseURL=new BaseURL();
+ // return user data promoise
     async getUser(){
-        var data="";
-        try{
-            axios({
-             method: "GET",
-             withCredentials: true,
-             url: "http://localhost:8000/user",
-           }).then((res) => {
-             //check if user logged in 
-            if(res.data){
-                data=res.data
-              return data;
-            } 
-           });
-         }catch(err) {
-         }
-         return data;
-    }
-    async getUserTest(){
-      var res=await axios({
-        method: "GET",
-        withCredentials: true,
-        url:"http://localhost:8000/user"}
-        );
-      const {data}=res.data;
-      console.log(res);
+      var data;
+      try{
+        var res=await axios({
+          method: "GET",
+          withCredentials: true,
+          url:"http://localhost:8000/user"}
+          );
+        data=await res.data;
+      }catch(err){
+        console.error(err);
+      }
       return data;
   }
     // converts date to show month style
@@ -56,7 +42,7 @@ class Util {
    public sendAlert(error:any){
       alert(error);
     }
-    public setInputValue(element:any,attribute:any,value:any){
+    public setAttributeValue(element:any,attribute:any,value:any){
       document.getElementById(element)?.setAttribute(attribute,value);
     }
      

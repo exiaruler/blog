@@ -1,14 +1,11 @@
 import React, { useEffect, useState,useRef } from 'react';
 import axios from 'axios';
-import * as ReactDOM from 'react-dom';
+import Util from '../api/Util';
 import BlogBox from './BlogBox';
 import {
   BrowserRouter
     as Router, Switch, Route, Link, useParams, BrowserRouter,useHistory
 } from "react-router-dom";
-
-import BlogView from '../blog/blogview';
-
    interface Blog{
     id:number;
     title:String;
@@ -25,6 +22,7 @@ import BlogView from '../blog/blogview';
     const [admin,setAdmin]=useState(false);
     const [nextBtn,setNextBtn]=useState(false);
     const [prevBtn,setPrevBtn]=useState(true);
+    const util=new Util();
     const pageButtonNextRef=useRef(null);
     const pageButtonBackRef=useRef(null);
     const api=prop.api;
@@ -84,19 +82,12 @@ import BlogView from '../blog/blogview';
         });
       }
     const checkUser = () =>{
-      try{
-        axios({
-         method: "GET",
-         withCredentials: true,
-         url: "http://localhost:8000/user",
-       }).then((res) => {
-         //check if user logged in 
-        if(res.data){
-          setAdmin(true);
-        } 
-       });
-     }catch(err) {
-     }
+    const response=util.getUser();
+    response.then((res)=>{
+      if(res){
+        setAdmin(true);
+      } 
+    });
     }
     const deleteEntry =()=>{
       try{

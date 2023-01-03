@@ -22,16 +22,13 @@ import Util from '../api/Util';
   const [postBtn,setPostBtn]=useState(true);
 
   const getUser = async () =>{
-    await axios({
-      method: "GET",
-      withCredentials: true,
-      url: "http://localhost:8000/user",
-    }).then((res) => {
-      if(!res.data){
+    const response=util.getUser();
+    response.then((res)=>{
+      if(!res){
         history.push("/login");
         history.go(0);
       }
-      setUser(res.data.name);
+      setUser(res.name);
     });
   }
   const getPost = async () =>{
@@ -50,7 +47,7 @@ import Util from '../api/Util';
       setForm(formData);
       setUpdateBtn(true);
       setPostBtn(false);
-      document.getElementById('topic-input')?.setAttribute('disabled','true');
+      util.setAttributeValue('topic-input','disabled','true')
     });
   }
   

@@ -54,26 +54,21 @@ function App() {
   }
 }
   const getUser = () =>{
-    try{
-       axios({
-        method: "GET",
-        withCredentials: true,
-        url: "http://localhost:8000/user",
-      }).then((res) => {
-        //check if user logged in 
-       if(res.data!=userSignedIn){
-          setUserSignedIn(true);
-          //set user information
-        setItems(res.data);
-        setRole(res.data.role);
-        setUser(res.data.name);
-        //hide and show nav bar
-        setShowLogin(false);
-        setShowLogout(true);
-       }
-      });
-    }catch(err) {
-    }
+    const response=apiUtil.getUser();
+    response.then((res)=>{
+      //check if user logged in 
+      console.log(res);
+      if(res!=userSignedIn){
+        setUserSignedIn(true);
+        //set user information
+      setItems(res);
+      setRole(res.role);
+      setUser(res.name);
+      //hide and show nav bar
+      setShowLogin(false);
+      setShowLogout(true);
+     }
+    });
   }
   useEffect(() => {
     getKey();

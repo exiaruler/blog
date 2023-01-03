@@ -66,20 +66,12 @@ import Util from '../api/Util';
     };
 
     const checkUser = async () =>{
-      try{
-        await axios({
-          method: "GET",
-          withCredentials: true,
-          url: "http://localhost:8000/user",
-        }).then((res) => {
-         if(res.data!=""){
-          history.push("/manage");
-         }
-        });
-      }catch(err) {
-        alert(err);
-      }
-  
+    const response=util.getUser();
+    response.then((res)=>{
+      if(res!=""){
+        history.push("/manage");
+       }
+    });
     }
 
     useEffect(() => {
