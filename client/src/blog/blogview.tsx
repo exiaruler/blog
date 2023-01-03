@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Util from '../api/Util';
 import BlogBox from '../components/BlogBox';
 import BlogParagraph from '../components/BlogParagraph';
 import {
   BrowserRouter
     as Router, Switch, Route, Link, useParams, BrowserRouter,useHistory
 } from "react-router-dom";
-import { title } from 'process';
-import { totalmem } from 'os';
+
   function BlogView(props:any) {
     const[title,setTitle]=useState("");
     const[date,setDate]=useState("");
     const[body,setBody]=useState([]);
-    const [cPage,setCPage]=useState(1);
     const history=useHistory();
+    const util=new Util();
     const getBlog = () =>{
-      debugger;
       const id=props.match.params.id;
       axios({
         method: "GET",
@@ -23,17 +22,16 @@ import { totalmem } from 'os';
         url: "http://localhost:8000/get-a-blog/"+id
       }).then((res) => {
        const entry=res.data;
+       const convertDate=util.dateConversionMonth(entry.date);
        setTitle(entry.title);
-       setDate(entry.date);
+       setDate(convertDate);
        setBody(entry.body);
-       //console.log(entry.body.split(" "));
       });
     }
     const back=()=>{
       history.push("/blog");
     }
     useEffect(() => {
-      console.log(props);
       getBlog();
       
     },);

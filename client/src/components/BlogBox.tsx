@@ -15,10 +15,7 @@ function BlogBox(details:any){
             <h1>{details.title}</h1>
             <div className='blog-entry-date'>
             <p>{date}</p>
-
             </div>
-            
-
         </div>
     );
 }

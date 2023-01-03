@@ -6,8 +6,9 @@ import {
   BrowserRouter
     as Router, Switch, Route, Link, useParams, BrowserRouter
 } from "react-router-dom";
-import axios from 'axios';
+import Util from '../api/Util';
   function Blog(prop:any){    
+    const util=new Util();
     useEffect(() => {
     },[]);
     return(
@@ -16,7 +17,7 @@ import axios from 'axios';
         <div className='column'>
         </div>
         <div >
-        <BlogList api="http://localhost:8000/get-all-blog/" user={true}/>
+        <BlogList api={util.getUrlBase()+"get-all-blog/"} user={true}/>
         </div>
         <div className='column'>
         </div>

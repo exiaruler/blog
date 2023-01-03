@@ -27,6 +27,7 @@ function App() {
   const [mobileNav,setMobileNav]=useState(false);
   const [nav,setNav]=useState(false);
   const [role, setRole] = useState<any>(null);
+  const [user,setUser]=useState<any>(null);
   const apiUtil=new APIUtil();
   const checkDevice=()=>{
     if(isMobile){
@@ -65,6 +66,7 @@ function App() {
           //set user information
         setItems(res.data);
         setRole(res.data.role);
+        setUser(res.data.name);
         //hide and show nav bar
         setShowLogin(false);
         setShowLogout(true);
@@ -84,13 +86,10 @@ function App() {
   return (
     <Router>
       <div>
-    { nav ?<NavBar role={role}/> :null }
+    { nav ?<NavBar role={role} user={user}/> :null }
     {mobileNav? <NavBarMobile/>:null}
     <div>
     </div>
-    <div >
-        {showLogout ? <h1>Welcome {item?.name}</h1>:null}
-       </div>
       </div>
       <RoutesSwitch/>
     </Router>

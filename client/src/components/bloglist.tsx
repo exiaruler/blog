@@ -46,6 +46,17 @@ import BlogView from '../blog/blogview';
         setBlogs(res.data.output);
       });
     }
+    const handleChange= async (value:number)=>{
+      setPage(value);
+      const currentPage=value;
+      await axios({
+        method: "GET",
+        withCredentials: true,
+        url:api+currentPage
+      }).then((res) => {
+        setBlogs(res.data.output);
+      });
+    }
     
     const getBlogsController = async (event:any) =>{
       const component=event.currentTarget.id;
@@ -64,8 +75,6 @@ import BlogView from '../blog/blogview';
           setPrevBtn(true);
        }
       }
-      var cookies=undefined;
-      cookies=document.cookie.split('; ').find(row=>row.startsWith('auth'))?.split('=')[1].toString();
         await axios({
           method: "GET",
           withCredentials: true,

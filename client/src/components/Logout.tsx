@@ -11,6 +11,7 @@ import {
   } from "react-router-dom";
   
 class Logout extends React.Component {
+  
      logOut= async () => {
         await axios({
           method: "POST",

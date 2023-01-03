@@ -4,37 +4,43 @@ import {
     Link,
   } from "react-router-dom";
   import LogoutComponent from '../components/Logout';
+ 
 function NavBar(prop:any){
 const [admin,setAdmin]=useState(false);
+const [user,setUser]=useState<any>(null);
 
 const adminTools=()=>{
-    var role=prop.role
     if(prop.role!=null){
       setAdmin(true);
+      setUser(prop.user);
     }else{
       setAdmin(false);
     }
  
 }
-
+const hrefStyle = {
+  padding:"12px 30px"
+};
 useEffect(() => {
   adminTools();
-     
    },);
    
 return (
     <div>
        <nav>
          <li className="nav">
-            
            <li>  <a> <Link to="/home">Home</Link> </a>    </li>
            <li>  <a> <Link to="/about-me">About Me</Link></a></li>
            <li>  <a><Link to="/Coming-Soon">Blog</Link> </a> </li>
-           {admin ? 
-            <li> <a><Link to="/manage">Manage</Link> </a> </li>
-           :null}
             {admin ? 
-            <li> <a>  <LogoutComponent/></a> </li>
+            <li className="dropdown">
+            <a className="dropbtn" href="javascript:void(0)">{"Manage "+user}</a>
+           <div className="dropdown-content">
+            <a href="/post-blog" style={hrefStyle}>New post</a>
+           <a><Link to="/manage">Manage</Link> </a>
+           <a>  <LogoutComponent/></a>
+           </div>
+           </li>
            :null}
          </li>
          </nav>

@@ -83,7 +83,7 @@ router.get('/get-blog-topic',async(req: express.Request, resp: express.Response,
 });
 
     
-router.put('/edit-blog/:id',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.put('/edit-blog/:id',verifyPost,async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     postContr.updatePost(req,resp);     
 });
 

@@ -16,9 +16,8 @@ module.exports =function(req,resp,next){
         }
     }
    checkPost(title,body,topic,user);
-   console.log(error);
    if (error.length>0){
-       next(resp.json(error));
+       next(resp.status(200).json(error));
    }
     next();
 }

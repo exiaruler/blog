@@ -9,39 +9,58 @@ import {
     Redirect
   } from "react-router-dom";
 import axios, { AxiosResponse } from 'axios';
+import Util from '../api/Util';
 
   function Login() {
     const history = useHistory();
-    const [userName,setUsername]=useState("");
-  const [password,setPassword]=useState("");
-  
+    const util=new Util();
+    const [form,setForm]=useState({
+      username:"",
+      password:""
+    });
+    const [error,setError]=useState({
+      userError:"Username",
+      passwordError:"Password",
+      validationError:""
+    });
 
-
+    const resetError=()=>{
+      setError(errors=>({
+        ...errors,
+        userError:"Username",
+        passwordError:"Password",
+        validationError:""
+      }));
+    };
+    const onHandleChange=(variable:any,property:any)=>{
+      const setValue=util.setJsonValue(form,variable,property);
+      setForm(setValue);
+    }
     const loginUser= async (e: { preventDefault: () => void; })=>{
-     e.preventDefault();
+    // e.preventDefault();
+    resetError();
      try{
       await axios({
         method:"post",
-        data:{
-       username:userName,
-       password:password
-        },
+        data:form,
         withCredentials:true,
         url:"http://localhost:8000/login",
-        
       })
-      //.then((resp)=>console.log(resp));
       .then((res : AxiosResponse) => {
         if (res.data === "Successfully Authenticated") {
          window.location.href = "/manage"
+       }else{
+        const errorMsg=res.data;
+        var errorData=util.setJsonValue(error,"userError",errorMsg.userNameError);
+        errorData=util.setJsonValue(error,"passwordError",errorMsg.passwordError);
+        errorData=util.setJsonValue(error,"validationError",errorMsg.loginError);
+        setError(errorData)
        }
-      }, () => {
-        console.log("Failure");
+      }, (err) => {
+        alert(err);
       })
-      
-      
     }catch(err){
-      console.error(err.message);
+      alert(err);
     }
       
     };
@@ -52,22 +71,19 @@ import axios, { AxiosResponse } from 'axios';
           method: "GET",
           withCredentials: true,
           url: "http://localhost:8000/user",
-        }).then((res) => {console.log(res.data);
-          //console.log(res.data.role);
-         if(res.data==null){
-          window.location.href = "/"
-          
+        }).then((res) => {
+         if(res.data!=""){
+          history.push("/manage");
          }
         });
       }catch(err) {
-        console.error(err.message);
+        alert(err);
       }
   
     }
 
     useEffect(() => {
       checkUser();
-      
     }, []);
     
     
@@ -79,12 +95,12 @@ import axios, { AxiosResponse } from 'axios';
           <div  className="columnForm">
         <h1>Login</h1>
         <p>Username</p>
-        <input placeholder="username" onChange={(e)=>setUsername(e.target.value)}/>
+        <input placeholder={error.userError} onChange={(e)=>onHandleChange("username",e.target.value)}/>
         <p>Password</p>
-        <input placeholder="password"  onChange={(e)=>setPassword(e.target.value)}/>
+        <input placeholder={error.passwordError} onChange={(e)=>onHandleChange("password",e.target.value)} type="password"/>
+        <p>{error.validationError}</p>
         <button onClick={loginUser}>Login</button>
         </div>
-        <p ></p>
         <div className="columnForm"></div>
         </div>
       
