@@ -9,31 +9,23 @@ import {
     useParams,
     useHistory
   } from "react-router-dom";
+import Util from '../api/Util';
 function Manage(){
         const [checkAdmin,setCheckAdmin]=useState(false);
+        const history=useHistory();
+        const util=new Util();
         const getUser = async () =>{
-            try{
-              await axios({
-                method: "GET",
-                withCredentials: true,
-                url: "http://localhost:8000/user",
-              }).then((res) => {
-              //if user role admin reavels link to admin manage page on page
-               if(res.data.role=="admin"){
+            const response=util.getUser();
+            response.then((res)=>{
+              if(!res){
+                history.push("/login");
+                history.go(0);
+              }
+              if(res.role=="admin"){
                 setCheckAdmin(true);
-                
                }
-              
-              });
-            }catch(err) {
-              console.error(err.message);
-            }
-        
-          }
-        
-         
-        
-               
+            });
+        }       
         const AdminManageLink =()=>
         <div>
             <Link to="admin-manage">Admin Manage Menu</Link>

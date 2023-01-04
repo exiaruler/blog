@@ -68,7 +68,7 @@ import Util from '../api/Util';
     const checkUser = async () =>{
     const response=util.getUser();
     response.then((res)=>{
-      if(res!=""){
+      if(res){
         history.push("/manage");
        }
     });
