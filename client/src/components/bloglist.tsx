@@ -2,6 +2,7 @@ import React, { useEffect, useState,useRef } from 'react';
 import axios from 'axios';
 import Util from '../api/Util';
 import BlogBox from './BlogBox';
+import DeleteModal from '../components/DeleteModal';
 import {
   BrowserRouter
     as Router, Switch, Route, Link, useParams, BrowserRouter,useHistory
@@ -22,16 +23,24 @@ import {
     const [admin,setAdmin]=useState(false);
     const [nextBtn,setNextBtn]=useState(false);
     const [prevBtn,setPrevBtn]=useState(true);
+    const [deleteModal,setDeleteModal]=useState(false);
     const util=new Util();
     const pageButtonNextRef=useRef(null);
     const pageButtonBackRef=useRef(null);
     const api=prop.api;
+    const [selectBlog,setSelectBlog]=useState({
+      id:"",
+      item:""
+    });
     const history =useHistory();
-    //import APIUtil from '../api/Util';const apiUtil=new APIUtil();
 
     const getBlogs = async () =>{
     var cookies=undefined;
-    cookies=document.cookie.split('; ').find(row=>row.startsWith('auth'))?.split('=')[1].toString();
+    const call={
+      method: "GET",
+      withCredentials: true,
+      url:api+page
+    };
       await axios({
         method: "GET",
         withCredentials: true,
@@ -89,21 +98,28 @@ import {
       } 
     });
     }
-    const deleteEntry =()=>{
-      try{
-
-      }catch(err){
-
-      }
-    }
     const editEntry=(id:any)=>{
       history.push("/edit-blog/"+id);
     }
+    const openDeleteModal=(id:any,item:String)=>{
+      const response=util.getUser();
+      response.then((res)=>{
+      if(!res){
+        history.go(0);
+      } 
+      });
+      var data=util.setJsonValue(selectBlog,"id",id);
+      data=util.setJsonValue(selectBlog,"item",item);
+      setSelectBlog(data);
+      setDeleteModal(true);
+    }
+    const closeDeleteModal=()=>{
+      setDeleteModal(false);
+    }
     useEffect(() => {
       getBlogs();
-      if(prop.user!=undefined){
-        checkUser();
-      }
+      checkUser();
+      
       
     },[]);
     return(
@@ -123,12 +139,12 @@ import {
       <BlogBox li  title={blog.title} date={blog.date}/> 
       </Link>
       {admin ? 
-        <button>Delete</button>
+        <button onClick={()=>openDeleteModal(blog.id,blog.title)}>Delete</button>
        :null}
+       <DeleteModal show={deleteModal} id={selectBlog.id} http={"http://localhost:8000/delete-blog/"} item={selectBlog.item} onClose={closeDeleteModal}/>
         {admin ? 
         <button onClick={()=>editEntry(blog.id)} >Update</button>
        :null}
-      
       </ul>
        ))}
       </div>

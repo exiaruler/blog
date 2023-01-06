@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Url } from 'url';
 //import {base} from './Base';
 class Util {
  // return user data promoise
@@ -8,13 +9,35 @@ class Util {
         var res=await axios({
           method: "GET",
           withCredentials: true,
-          url:"http://localhost:8000/user"}
+          url:this.getUrlBase()+"/user"}
           );
         data=await res.data;
       }catch(err){
         console.error(err);
       }
       return data;
+  }
+  // Use javascript standard to make API call
+  async apiCall(http:RequestInfo,config:object){
+    var data;
+    try{
+      const res=await fetch(http,config);
+      data=await res;
+    }catch(err){
+      console.error(err);
+    }
+    return data;
+  }
+  // Use React axios library to make API call
+  async axiosCall(json:object){
+    var data;
+    try{
+      const res=await axios(json);
+      data=await res;
+    }catch(err){
+      console.error(err);
+    }
+    return data;
   }
     // converts date to show month style
     dateConversionMonth(date:any){
@@ -32,7 +55,7 @@ class Util {
       return "does not exist";
     }
    public getUrlBase(){
-      return "http://localhost:8000/";
+      return "http://localhost:8000";
     }
    public setJsonValue(json:any,key:any,value:String){
       var currentJson=json;
@@ -45,6 +68,7 @@ class Util {
     public setAttributeValue(element:any,attribute:any,value:any){
       document.getElementById(element)?.setAttribute(attribute,value);
     }
+    
      
 }
 export default Util;

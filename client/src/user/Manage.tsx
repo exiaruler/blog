@@ -10,16 +10,18 @@ import {
     useHistory
   } from "react-router-dom";
 import Util from '../api/Util';
+import ReactBase from '../ReactBase';
 function Manage(){
         const [checkAdmin,setCheckAdmin]=useState(false);
         const history=useHistory();
         const util=new Util();
+        const reactBase=new ReactBase();
         const getUser = async () =>{
             const response=util.getUser();
             response.then((res)=>{
               if(!res){
                 history.push("/login");
-                history.go(0);
+                reactBase.routerReload();
               }
               if(res.role=="admin"){
                 setCheckAdmin(true);

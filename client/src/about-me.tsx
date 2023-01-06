@@ -1,9 +1,42 @@
-import React from 'react';
-
+/* eslint-disable react-hooks/rules-of-hooks */
+import React, {  useEffect, useState } from "react";
+import Util from './api/Util';
+import ReactBase from './ReactBase';
   import Footer from './components/Footer';
-  function aboutme() {
+  export default function aboutme() {
+    const [showProjectTools,setShowProjectTools]=useState(false);
+    const util=new Util();
+    const reactBase=new ReactBase();
+    const getAllProjects=()=>{
+
+    }
+    const displayAdminTools=()=>{
+      const getUser=util.getUser();
+      getUser.then((resp)=>{
+        if(resp){
+          setShowProjectTools(true);
+        }
+      });
+
+    }
+    const addNewProject=()=>{
+      /*
+      const getUser=util.getUser();
+      getUser.then((resp)=>{
+        if(resp){
+
+        }else{
+          reactBase.routerReload();
+        }
+      });
+      */
+     //debugger;
+      //reactBase.routerReload();
+    }
+    useEffect(() => {
+      displayAdminTools();
+    },[]);
     return (
-      
         <div>
           <div className="row">
             <div className="column">
@@ -18,8 +51,12 @@ import React from 'react';
           </p>
           <p></p>
           <h2>Current Projects</h2>
+          {showProjectTools? <button onClick={addNewProject}>Add Project</button> :null}
           <ul className="bodyText">
-            <li>Blog Features of this website</li>
+            <li>Blog Features of this website
+            {showProjectTools?  <button>Delete</button> :null}
+            {showProjectTools?  <button>Update</button> :null}
+            </li>
             <li>arest control system</li>
           </ul>
          
@@ -39,5 +76,3 @@ import React from 'react';
       
     
     )};
-  
-export default aboutme;

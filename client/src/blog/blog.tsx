@@ -17,7 +17,7 @@ import Util from '../api/Util';
         <div className='column'>
         </div>
         <div >
-        <BlogList api={util.getUrlBase()+"get-all-blog/"} user={true}/>
+        <BlogList api={util.getUrlBase()+"/get-all-blog/"} user={true}/>
         </div>
         <div className='column'>
         </div>

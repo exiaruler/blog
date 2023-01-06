@@ -2,7 +2,6 @@ import React, { useState,useEffect,useRef,Component } from 'react';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
 import { useHistory,useParams } from "react-router-dom";
-import Footer from '../components/Footer';
 import Util from '../api/Util';
   function BlogEntry(props:any) {
   const util=new Util();
@@ -34,21 +33,23 @@ import Util from '../api/Util';
   const getPost = async () =>{
     const id=props.match.params.id;
     if(id!=undefined){
-    axios({
-      method: "GET",
-      withCredentials: true,
-      url: "http://localhost:8000/get-a-blog/"+id
-    }).then((res) => {
-      const data=res.data;
-      var formData=util.setJsonValue(form,"title",data.title);
-      formData=util.setJsonValue(form,"topic",data.topic);
-      formData=util.setJsonValue(form,"body",data.body);
-      formData=util.setJsonValue(form,"user",data.user);
-      setForm(formData);
-      setUpdateBtn(true);
-      setPostBtn(false);
-      util.setAttributeValue('topic-input','disabled','true')
-    });
+      const call={
+        method: "GET",
+        withCredentials: true,
+        url: util.getUrlBase()+"/get-a-blog/"+id
+      };
+      const res=util.axiosCall(call);
+      res.then((resp)=>{
+        const data=resp?.data;
+        var formData=util.setJsonValue(form,"title",data.title);
+        formData=util.setJsonValue(form,"topic",data.topic);
+        formData=util.setJsonValue(form,"body",data.body);
+        formData=util.setJsonValue(form,"user",data.user);
+        setForm(formData);
+        setUpdateBtn(true);
+        setPostBtn(false);
+        util.setAttributeValue('topic-input','disabled','true')
+      });
   }
   
   }
@@ -65,32 +66,33 @@ import Util from '../api/Util';
       history.push("/login");
       return;
     }
-    await axios({
+    const call={
       method:"put",
       data:form,
       withCredentials:true,
       url:"http://localhost:8000/edit-blog/"+id,
-      
-    }).then((resp)=>{
-      const data=resp.data;
-    if(data=="success"){
-      history.push("/blog");
-    }else{
-      for(var i=0; i<data.length; i++){
-        var error=data[i];
-        if(error.title){
-         setTitleError(error.title);
-        }
-        if(error.topic){
-          setTopicError(error.topic);
-        }
-        if(error.body){
-          setBodyError(error.body);
+    };
+    const res=util.axiosCall(call);
+    res.then((resp)=>{
+      const data=resp?.data;
+      if(data=="success"){
+        history.push("/blog");
+      }else{
+        for(var i=0; i<data.length; i++){
+          var error=data[i];
+          if(error.title){
+           setTitleError(error.title);
+          }
+          if(error.topic){
+            setTopicError(error.topic);
+          }
+          if(error.body){
+            setBodyError(error.body);
+          }
         }
       }
-    }
-    }
-    );
+    });
+
   }
   const post=()=>{
     setTopicError("");
