@@ -9,7 +9,7 @@ const fileUpload = require('express-fileupload');
 const post=require('./routes/post');
 const user=require('./routes/user');
 const key=require('./routes/keyGen');
-
+const project=require('./routes/project');
 const app = express();
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -38,6 +38,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
  app.use(post);
  app.use(user);
  app.use(key);
+ app.use(project);
 
 
 
