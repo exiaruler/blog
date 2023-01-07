@@ -1,5 +1,5 @@
 import { Response, Request, response } from "express";
-const project=require('../model/blog');
+const project=require('../model/Project');
 export class ProjectController{
 
     async createProject(req:Request,res:Response){

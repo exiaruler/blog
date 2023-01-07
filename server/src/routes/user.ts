@@ -2,7 +2,7 @@ import * as express from 'express';
 const router=express.Router();
 const user=require('../model/user');
 const passport=require('passport');
-import bcrypt from 'bcrypt';
+//import bcrypt from 'bcrypt';
 import { isConstructorDeclaration } from 'typescript';
 import {UserController} from '../controller/UserController';
 const verifyUser=require('./middleware/verifyUser');

@@ -2,9 +2,13 @@
 import React, {  useEffect, useState } from "react";
 import Util from './api/Util';
 import ReactBase from './ReactBase';
-  import Footer from './components/Footer';
+import Footer from './components/Footer';
+import AddProject from './project/AddProject';
+import DeleteModal from "./components/DeleteModal";
   export default function aboutme() {
     const [showProjectTools,setShowProjectTools]=useState(false);
+    const [addModal,setAddModal]=useState(false);
+    const [deleteModal,setDeleteModal]=useState(false);
     const util=new Util();
     const reactBase=new ReactBase();
     const getAllProjects=()=>{
@@ -19,20 +23,36 @@ import ReactBase from './ReactBase';
       });
 
     }
-    const addNewProject=()=>{
-      /*
+    const openDeleteModal=()=>{
+      const response=util.getUser();
+      response.then((res)=>{
+      if(!res){
+        reactBase.routerReload();
+      } 
+      });
+      //var data=util.setJsonValue(selectBlog,"id",id);
+      //data=util.setJsonValue(selectBlog,"item",item);
+      //setSelectBlog(data);
+      setDeleteModal(true);
+    }
+
+    const closeDeleteModal=()=>{
+      setDeleteModal(false);
+    }
+    const openAddModal=(id:any,namae:string,url:any)=>{
       const getUser=util.getUser();
       getUser.then((resp)=>{
         if(resp){
-
+          setAddModal(true);
         }else{
           reactBase.routerReload();
         }
       });
-      */
-     //debugger;
-      //reactBase.routerReload();
     }
+    const closeAddModal=()=>{
+      setAddModal(false);
+    }
+
     useEffect(() => {
       displayAdminTools();
     },[]);
@@ -51,10 +71,12 @@ import ReactBase from './ReactBase';
           </p>
           <p></p>
           <h2>Current Projects</h2>
-          {showProjectTools? <button onClick={addNewProject}>Add Project</button> :null}
+          {showProjectTools? <button onClick={()=>openAddModal("test","test","test")}>Add Project</button> :null}
+          <AddProject show={addModal} onClose={closeAddModal}/>
           <ul className="bodyText">
             <li>Blog Features of this website
-            {showProjectTools?  <button>Delete</button> :null}
+            {showProjectTools?  <button onClick={openDeleteModal}>Delete</button> :null}
+            <DeleteModal show={deleteModal} id={"1"} http={"/delete-project/"} item={""} onClose={closeDeleteModal}/>
             {showProjectTools?  <button>Update</button> :null}
             </li>
             <li>arest control system</li>

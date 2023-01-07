@@ -18,3 +18,4 @@ router.get('/get-project',(req: express.Request, resp: express.Response, next: e
 router.get('/get-all-project',(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     project.getAllProjects(req,resp);
 });
+module.exports = router;
