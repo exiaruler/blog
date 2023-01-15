@@ -4,7 +4,7 @@ module.exports =function(req,resp,next){
     function verifyProject(name:String,url:String){
         // verify url
         const verifyUrl=url.indexOf("github.com");
-        if(verifyUrl==0&&haveUrl==true){
+        if(verifyUrl==-1&&haveUrl==true){
             errArr.push({url:"URL is not Valid. Must be GitHub"});
         }
         if(name==""){

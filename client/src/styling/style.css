@@ -207,7 +207,7 @@ li.dropdown {
   display: inline-block;
   padding: 12px 16px;
 }
-li a, .dropbtn {
+.dropdown li a, .dropbtn {
   display: inline-block;
   color: white;
   text-align: center;

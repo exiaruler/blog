@@ -3,9 +3,9 @@ const project=require('../model/Project');
 export class ProjectController{
 
     async createProject(req:Request,res:Response){
-        const {name,url,haveUrl}=req.body;
+        const {name,url}=req.body;
         try{
-            const add=await new project({projectName:name,projectUrl:url}).save();
+            const add=await new project({name:name,url:url}).save();
             if(add){
                 res.status(200).send("success");
             }
@@ -15,9 +15,9 @@ export class ProjectController{
     }
     async updateProject(req:Request,res:Response){
         const id = req.params['id'];
-        const {name,url,haveUrl}=req.body;
+        const {name,url}=req.body;
         try{
-            const update=await project.findByIdAndUpdate({projectName:name,projectUrl:url});
+            const update=await project.findByIdAndUpdate({name:name,url:url});
             if(update){
                 res.status(200).send("success");
             }
@@ -57,5 +57,13 @@ export class ProjectController{
           } catch (e) {
               res.status(400).send("Cannot find "+req.params.id);
           }
+    }
+    async deleteAllProject(req:Request,res:Response){
+        try{
+            const del=await project.remove({}).exec();
+            res.json(del);
+        }catch(err){
+            res.status(400).send(err);
+        }
     }
 }

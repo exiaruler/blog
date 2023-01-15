@@ -4,37 +4,44 @@ import ReactBase from '../ReactBase';
  const AddProject=(props:any)=>{
     const util=new Util();
     const reactBase=new ReactBase();
-    const id=props.id;
+    const id=props.projectId;
     var displayItem="";
-    const [form,setForm]=useState({
+    var form={
         name:"",
         haveUrl:"",
         url:""
-    });
+    };
     const [disabledUrlInput,setDisabledUrlInput]=useState(true);
     var title="Add Project";
     if(!props.show){
         return null;
     }
-    if(props.item==undefined){
-        displayItem=id;
-    }else{
-        displayItem=props.item;
+    const insertData=()=>{
+        var data=util.setJsonValue(form,'name',props.projectName);
+        data=util.setJsonValue(form,'url',props.projectUrl);
+       
+        if(props.projectUrl==""){
+            data=util.setJsonValue(form,'haveUrl',"");
+        }
+        form=data;
+        //util.setAttributeValue('NameInput','value',form.name);
     }
-    if(id!=undefined){
+    if(id!=""){
+        debugger;
+        insertData();
         title="Update Project"
         util.setAttributeValue('UpdateBtn','hidden','false');
     }
+    
     const addCall=()=>{
         const call={
             method:"Post",
-            url:util.getUrlBase+"/add-project",
+            url:util.getUrlBase()+"/add-project",
             data:form,
             withCredentials:true
         };
        const res= util.axiosCall(call);
        res.then((resp)=>{
-        debugger;
         if(resp?.status==200){
             reactBase.routerReload();
         }
@@ -44,7 +51,7 @@ import ReactBase from '../ReactBase';
     const updateCall=()=>{
         const call={
             method:"Put",
-            url:"/update-project",
+            url:util.getUrlBase()+"/update-project",
             data:form,
             withCredentials:true
         };
@@ -57,10 +64,10 @@ import ReactBase from '../ReactBase';
         
     }
     const onChange= (key:any,value:any)=>{
-        setForm({...form,[key]:value});
+        form={...form,[key]:value};
       }
     const onChangeCheck= (key:any,value:any)=>{
-        setForm({...form,[key]:value});
+        form={...form,[key]:value};
         if(value==true){
             setDisabledUrlInput(false);
         }else
@@ -75,7 +82,7 @@ import ReactBase from '../ReactBase';
         </div>
         <div className='modal-body'>
         <label>Project</label>
-        <input name="name" onChange={(e)=>onChange(e.target.name,e.target.value)}></input>
+        <input id='NameInput' name="name" defaultValue={props.projectName}  onChange={(e)=>onChange(e.target.name,e.target.value)}></input>
         <label>Does it Have URL</label>
         <input id='checkboxUrl' type="checkbox" name="haveUrl" onChange={(e)=>onChangeCheck(e.target.name,e.target.checked)}></input>
         <label>url</label>

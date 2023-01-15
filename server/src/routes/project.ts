@@ -9,10 +9,13 @@ router.post('/add-project',verifyProject,(req: express.Request, resp: express.Re
 router.put('/update-project',verifyProject,(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     project.updateProject(req,resp);
 });
-router.delete('/delete-project',(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.delete('/delete-project/:id',(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     project.deleteProject(req,resp);
 });
-router.get('/get-project',(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.delete('/delete-all-project',(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+    project.deleteAllProject(req,resp);
+});
+router.get('/get-project/:id',(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     project.getProject(req,resp);
 });
 router.get('/get-all-project',(req: express.Request, resp: express.Response, next: express.NextFunction)=>{

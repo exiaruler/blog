@@ -1,14 +1,13 @@
 import mongoose from 'mongoose';
 const Schemea=mongoose.Schema;
 const projectSchema=new Schemea({
-    projectName:{
+    name:{
         type:String,
         required:true
     },
-    projectUrl:{
+    url:{
         type:String,
     }
-    
     });
     
     const Project=mongoose.model('Project',projectSchema);
