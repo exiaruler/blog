@@ -45,6 +45,7 @@ export class PostController{
         }
     }
     async getAllPost(req:Request,res:Response){
+        console.log(req);
         const page:number=+req.params['page']; 
         try{
             const docs=await blog.find().exec()

@@ -1,4 +1,4 @@
-import { Response, Request, response } from "express";
+import { Response, Request, response,NextFunction } from "express";
 const user=require('../model/user');
 const passport=require('passport');
 import bcrypt from 'bcrypt';
@@ -44,6 +44,11 @@ import bcrypt from 'bcrypt';
         }catch(err){
             res.status(200).send(err.message);
         }
+    }
+    async checkAuth(req:Request,res:Response,next:NextFunction){
+        if (!req.isAuthenticated()) { 
+            res.status(401).send("unauthorised access");
+        }else  res.status(200).send("Success");
     }
 
 }

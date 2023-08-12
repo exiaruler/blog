@@ -7,14 +7,15 @@ import { isConstructorDeclaration } from 'typescript';
 import {UserController} from '../controller/UserController';
 const verifyUser=require('./middleware/verifyUser');
 const createJwt=require('../token/createJWT');
+const verifyLogin=require('./middleware/verifyLogin');
 const userControl= new UserController();
 
-router.post('/add-user',verifyUser,async(req: express.Request, resp: express.Response, next: express.NextFunction) => {
+router.post('/add-user',verifyLogin,verifyUser,async(req: express.Request, resp: express.Response, next: express.NextFunction) => {
    userControl.addUser(req,resp);
 });
 
 
-router.get('/all-users',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.get('/all-users',verifyLogin,async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     try {
         let items: any = await user.find({});
         items = items.map((item) => { return {id: item._id, name: item.name,username: item.username,password: item.password,role:item.role}});
@@ -65,11 +66,11 @@ router.post('/login',verifyUser,async(req: express.Request, resp: express.Respon
 router.post('/logout',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     req.logOut(function(err){
         resp.clearCookie('connect.sid',{path:'/'});
-        resp.send("Logged out");
+        resp.status(200).send("Logged out");
     });
 });
 
-router.get('/user',(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.get('/user',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
 resp.send(req.user);
 console.log(req.user);
 });
@@ -79,7 +80,11 @@ router.get('/get-user/:param/:id',(req: express.Request, resp: express.Response,
    const id = req.params['id'];
    const param=req.query['param'];
    
-    });
+});
+router.get('/auth',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+    userControl.checkAuth(req,resp,next)
+});
+
 
 
 

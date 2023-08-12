@@ -9,10 +9,14 @@ import {
     useParams,
     useHistory
   } from "react-router-dom";
-  
+import Util from '../api/Util';
+
 class Logout extends React.Component {
-  
+  private util=new Util();
      logOut= async () => {
+      const call={
+
+      };
         await axios({
           method: "POST",
           withCredentials: true,

@@ -2,10 +2,9 @@ const blog=require('../model/blog');
 import * as express from 'express';
 import { fstat } from 'fs';
 const router=express.Router();
-const user=require('../model/user');
-const passport=require('passport');
 import { send } from 'process';
 const verifyPost=require('./middleware/verifyPost');
+const verifyLogin=require('./middleware/verifyLogin');
 import { PostController } from '../controller/PostController';
 const fs = require('fs');
 var path = require('path');
@@ -21,7 +20,7 @@ const storage = multer.diskStorage({
   });
   
 const upload = multer({ storage: storage });
-router.post('/add-blog',verifyPost,upload.single('image'),async (req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.post('/add-blog',verifyLogin,verifyPost,upload.single('image'),async (req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     postContr.createPost(req,resp);
 });
 
@@ -53,11 +52,11 @@ router.get('/get-blog-topic',async(req: express.Request, resp: express.Response,
 });
 
     
-router.put('/edit-blog/:id',verifyPost,async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.put('/edit-blog/:id',verifyLogin,verifyPost,async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     postContr.updatePost(req,resp);     
 });
 
-router.delete('/delete-blog/:id',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.delete('/delete-blog/:id',verifyLogin,async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     postContr.deletePost(req,resp);
 });
 

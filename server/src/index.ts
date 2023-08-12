@@ -10,6 +10,7 @@ const post=require('./routes/post');
 const user=require('./routes/user');
 const key=require('./routes/keyGen');
 const project=require('./routes/project');
+const testRoutes=require('./routes/testRoutes');
 const app = express();
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -39,6 +40,8 @@ app.use(bodyparser.urlencoded({ extended: true }));
  app.use(user);
  app.use(key);
  app.use(project);
+ // testing 
+ app.use(testRoutes);
 
 
 

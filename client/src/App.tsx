@@ -20,7 +20,6 @@ import {isMobile} from 'react-device-detect';
 
 function App() {
   const [item, setItems] = useState<any>(null);
-  const history = useHistory();
   const [showLogout, setShowLogout] = useState(false);
   const [showLogin,setShowLogin] = useState(true);
   const [userSignedIn,setUserSignedIn] = useState(false);

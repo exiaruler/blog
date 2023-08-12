@@ -17,7 +17,7 @@ export class ProjectController{
         const id = req.params['id'];
         const {name,url}=req.body;
         try{
-            const update=await project.findByIdAndUpdate({name:name,url:url});
+            const update=await project.findByIdAndUpdate(id,{name:name,url:url});
             if(update){
                 res.status(200).send("success");
             }

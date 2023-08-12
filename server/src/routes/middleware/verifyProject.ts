@@ -1,19 +1,27 @@
 module.exports =function(req,resp,next){
     var errArr=[];
     const {name,url,haveUrl}=req.body;
-    function verifyProject(name:String,url:String){
+    var error={
+        name:"",
+        url:""
+    };
+    function verifyProject(name:String,url:String,haveUrl:boolean){
         // verify url
         const verifyUrl=url.indexOf("github.com");
         if(verifyUrl==-1&&haveUrl==true){
-            errArr.push({url:"URL is not Valid. Must be GitHub"});
+            error.url="URL is not Valid. Must be GitHub";
+        }else{
+            if(url==""&&haveUrl==true){
+                error.url="URL required";
+            }
         }
         if(name==""){
-            errArr.push({name:"Project name Required"});
+            error.name="Project name Required";
         }
     }
-    verifyProject(name,url);
-    if(errArr.length>0){
-        next(resp.status(200).json(errArr));
+    verifyProject(name,url,haveUrl);
+    if(error.name!=""||error.url!=""){
+        next(resp.status(200).json(error));
     }
     next();
 }
