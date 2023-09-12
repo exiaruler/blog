@@ -9,7 +9,11 @@ class Util {
         var res=await axios({
           method: "GET",
           withCredentials: true,
-          url:this.getUrlBase()+"/user"}
+          url:this.getUrlBase()+"/user",
+          headers:{
+            apikey:"S7fgxFOTKTK8aCjq",
+          }
+        }
           );
         data=await res.data;
       }catch(err){
@@ -31,6 +35,12 @@ class Util {
   // Use React axios library to make API call
   async axiosCall(json:object){
     var data;
+    const config={
+      headers:{
+        apikey:"S7fgxFOTKTK8aCjq",
+      }
+    };
+    json=Object.assign({}, config,json);
     try{
       const res=await axios(json);
       data=await res;

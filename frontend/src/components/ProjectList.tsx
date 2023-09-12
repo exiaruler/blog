@@ -112,7 +112,7 @@ interface Project{
             {showProjectTools? <button onClick={()=>openAddModal("","","")}>Add Project</button> :null}
           <AddProject show={addModal} onClose={closeAddModal} projectId={selProject.id} projectName={selProject.name} update={selProject.update}
           projectUrl={selProject.url} />
-          {projects.map(project=>(
+          {projects?.map(project=>(
             
             <ul className="bodyText" key={project._id}>
             <li>

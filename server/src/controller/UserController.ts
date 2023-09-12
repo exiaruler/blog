@@ -26,7 +26,7 @@ import bcrypt from 'bcrypt';
     async addAdminUser(){
         var userRole="admin";
         var username="admin";
-        var password="adminSamuel123"
+        var password="adminSamuel123";
         try{
             const find=await user.findOne({username:"admin"}).exec()
             if(!find){

@@ -59,8 +59,8 @@ function App() {
         setUserSignedIn(true);
         //set user information
       setItems(res);
-      setRole(res.role);
-      setUser(res.name);
+      setRole(res?.role);
+      setUser(res?.name);
       //hide and show nav bar
       setShowLogin(false);
       setShowLogout(true);

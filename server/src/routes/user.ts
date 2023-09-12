@@ -8,14 +8,15 @@ import {UserController} from '../controller/UserController';
 const verifyUser=require('./middleware/verifyUser');
 const createJwt=require('../token/createJWT');
 const verifyLogin=require('./middleware/verifyLogin');
+const verifyAccess=require('./middleware/verifyAccess');
 const userControl= new UserController();
 
-router.post('/add-user',verifyLogin,verifyUser,async(req: express.Request, resp: express.Response, next: express.NextFunction) => {
+router.post('/add-user',verifyAccess,verifyLogin,verifyUser,async(req: express.Request, resp: express.Response, next: express.NextFunction) => {
    userControl.addUser(req,resp);
 });
 
 
-router.get('/all-users',verifyLogin,async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.get('/all-users',verifyAccess,verifyLogin,async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     try {
         let items: any = await user.find({});
         items = items.map((item) => { return {id: item._id, name: item.name,username: item.username,password: item.password,role:item.role}});
@@ -35,21 +36,21 @@ router.delete('/delete-user/:id',async(req: express.Request, resp: express.Respo
 });
 
 
-router.put('/change-password/:id',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.put('/change-password/:id',verifyAccess,async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     const id=req.params['id'];
     const password=req.body['password'];
     await user.findByIdAndUpdate(id,{"password":password});
     resp.end();
 });
 
-router.put('/change-role/:id',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.put('/change-role/:id',verifyAccess,async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     const id = req.params['id'];
     const role=req.body['role'];
     await user.findByIdAndUpdate(id,{"role":role});
     resp.end();
 });
 
-router.put('/change-username/:id',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.put('/change-username/:id',verifyAccess,async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     const id = req.params['id'];
     const username=req.body['username'];
     await user.findByIdAndUpdate(id,{"username":username});
@@ -57,7 +58,7 @@ router.put('/change-username/:id',async(req: express.Request, resp: express.Resp
 
 });
 
-router.post('/login',verifyUser,async(req: express.Request, resp: express.Response, next:express.NextFunction)=>{
+router.post('/login',verifyAccess,verifyUser,async(req: express.Request, resp: express.Response, next:express.NextFunction)=>{
     userControl.login(req,resp);
 });
 

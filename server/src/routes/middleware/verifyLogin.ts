@@ -1,4 +1,3 @@
-
 module.exports=function (req, resp, next){
     const user=req.isAuthenticated();
    

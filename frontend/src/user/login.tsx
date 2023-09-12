@@ -9,10 +9,11 @@ import {
   } from "react-router-dom";
 import axios, { AxiosResponse } from 'axios';
 import Util from '../api/Util';
-
+import ReactBase from '../ReactBase';
   function Login() {
     const history = useNavigate();
     const util=new Util();
+    const reactBase=new ReactBase();
     const [form,setForm]=useState({
       username:"",
       password:""
@@ -37,6 +38,26 @@ import Util from '../api/Util';
     }
     const loginUser= async (e: { preventDefault: () => void; })=>{
     // e.preventDefault();
+    /*
+    const call={
+      method:"Post",
+      url:util.getUrlBase()+"/login",
+      data:form,
+      withCredentials:true
+    };
+    const res= util.axiosCall(call);
+       res.then((resp)=>{
+        if (resp?.data === "Successfully Authenticated") {
+          window.location.href = "/manage"
+        }else{
+         const errorMsg=resp?.data;
+         var errorData=util.setJsonValue(error,"userError",errorMsg.userNameError);
+         errorData=util.setJsonValue(error,"passwordError",errorMsg.passwordError);
+         errorData=util.setJsonValue(error,"validationError",errorMsg.loginError);
+         setError(errorData)
+        }
+       });
+       */
     resetError();
      try{
       await axios({
@@ -44,6 +65,9 @@ import Util from '../api/Util';
         data:form,
         withCredentials:true,
         url:"http://localhost:8000/login",
+        headers:{
+          apikey:"S7fgxFOTKTK8aCjq"
+        }
       })
       .then((res : AxiosResponse) => {
         if (res.data === "Successfully Authenticated") {
