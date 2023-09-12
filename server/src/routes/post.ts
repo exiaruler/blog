@@ -6,36 +6,23 @@ import { send } from 'process';
 const verifyPost=require('./middleware/verifyPost');
 const verifyLogin=require('./middleware/verifyLogin');
 import { PostController } from '../controller/PostController';
+const upload = require('../multer/upload');
+const multer  = require('multer')
+//const upload = multer({ dest: './uploads/' })
 const fs = require('fs');
 var path = require('path');
-var multer = require('multer');
 const postContr=new PostController();
-const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
-      cb(null, './uploads/');
-    },
-    filename: function(req, file, cb) {
-      cb(null, new Date().toISOString() + file.originalname);
-    }
-  });
-  
-const upload = multer({ storage: storage });
+
 router.post('/add-blog',verifyLogin,verifyPost,upload.single('image'),async (req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     postContr.createPost(req,resp);
 });
-
-router.post('/test',upload.single("image"),(req, resp: express.Response, next: express.NextFunction)=>{
- //const {data:file,contentType:string}=req.file;
-   console.log(req.file);
-   //const test=fs.readFileSync(path.join( "./src/"+ '/uploads/' + req.files));
-   /*
-   const image={
-       data:req.file.path,
-       name:"test"
-   }
-   */
-    //console.log(Image);
-   resp.send("success");
+router.post('/upload',upload.single("image"),(req, resp: express.Response, next: express.NextFunction)=>{
+  //const {data:file,contentType:string}=req.files;
+   //console.log(req.files);
+   const image=req.files;
+   //console.log(image.name);
+  // Handle the uploaded file
+  resp.json({ message: 'File uploaded successfully!' })
 });
 
 router.get('/get-all-blog/:page',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{

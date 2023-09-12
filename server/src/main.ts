@@ -1,10 +1,12 @@
 import { app } from './index';
+import {UserController} from './controller/UserController';
 import * as http from 'http';
 //import * as mongoose from 'mongoose';
 import mongoose from 'mongoose';
 const port = 8000;
 const server = http.createServer(app);
 const MONGO_URI = 'mongodb+srv://admin:123@cluster0.l6cgy.mongodb.net/blog?retryWrites=true&w=majority';
+const userControl= new UserController();
 server.listen(port);
 server.on('listening', async () => {
 	console.info(`Listening on port ${port}`);
@@ -12,6 +14,7 @@ server.on('listening', async () => {
 	mongoose.connection.on('open', () => {
 		console.info('Connected to Mongo.');
 		console.info('http://localhost:8000/');
+		userControl.addAdminUser();
 	});
 	mongoose.connection.on('error', (err: any) => {
 		console.error(err);

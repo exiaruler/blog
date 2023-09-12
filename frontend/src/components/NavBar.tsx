@@ -29,7 +29,7 @@ return (
     <div>
        <nav>
          <li className="nav">
-           <li>  <a> <Link to="/home">Home</Link> </a>    </li>
+           <li>  <a> <Link to="/">Home</Link> </a>    </li>
            <li>  <a> <Link to="/about-me">About Me</Link></a></li>
            <li>  <a><Link to="/Coming-Soon">Blog</Link> </a> </li>
             {admin ? 

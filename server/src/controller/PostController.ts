@@ -9,6 +9,7 @@ export class PostController{
     }
     async createPost(req:Request,res:Response){
         const {user,title,topic,body}=req.body;
+        console.log(req.body);
         try{
             const currentDate=this.util.getDate()
             const add=await new blog({title: title,topic:topic,user:user,body:body,date:currentDate,image:""}).save();
@@ -45,7 +46,6 @@ export class PostController{
         }
     }
     async getAllPost(req:Request,res:Response){
-        console.log(req);
         const page:number=+req.params['page']; 
         try{
             const docs=await blog.find().exec()

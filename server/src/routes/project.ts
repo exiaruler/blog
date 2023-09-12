@@ -20,6 +20,7 @@ router.get('/get-project/:id',(req: express.Request, resp: express.Response, nex
     project.getProject(req,resp);
 });
 router.get('/get-all-project',(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+    console.log(req.headers.authorization)
     project.getAllProjects(req,resp);
 });
 module.exports = router;

@@ -7,16 +7,22 @@ import ReactBase from '../ReactBase';
     const id=props.projectId;
     var updateBtn=true;
     var addBtn=false;
-    var displayItem="";
+    var checkbox="false";
+    const urlInput=useRef(null);
+    const checkRef=useRef(null);
+    var err={
+        nameErr:"",
+        urlErr:""
+    };
     var form={
         name:"",
-        haveUrl:"",
+        haveUrl:false,
         url:""
     };
     var disabledUrlInput=true;
     const [formTest,setFormTest]=useState({
         name:"",
-        haveUrl:"",
+        haveUrl:false,
         url:""
     });
     var title="Add Project";
@@ -26,19 +32,16 @@ import ReactBase from '../ReactBase';
     const insertData=()=>{
         var data=util.setJsonValue(form,'name',props.projectName);
         data=util.setJsonValue(form,'url',props.projectUrl);
-       
         if(props.projectUrl==""){
-            data=util.setJsonValue(form,'haveUrl',"");
+            data=util.setJsonValue(form,'haveUrl',false);
+        }else{
+            disabledUrlInput=false;
+            data=util.setJsonValue(form,'haveUrl',true);
+            document.getElementById('checkboxUrl')?.setAttribute('checked','true');
+            
         }
         form=data;
     }
-    if(id!=""){
-        insertData();
-        title="Update Project"
-        updateBtn=false;
-        addBtn=true;
-    }
-    
     const addCall=()=>{
         const call={
             method:"Post",
@@ -46,11 +49,16 @@ import ReactBase from '../ReactBase';
             data:form,
             withCredentials:true
         };
-        debugger;
        const res= util.axiosCall(call);
        res.then((resp)=>{
-        if(resp?.status==200){
+        debugger;
+        if(resp!.data=="success"){
             reactBase.routerReload();
+        }else{
+            var error=resp?.data;
+            var data=util.setJsonValue(err,'nameErr',error.name);
+            err=data;
+            //err.nameErr=error.name;
         }
        });
         
@@ -62,9 +70,9 @@ import ReactBase from '../ReactBase';
             data:form,
             withCredentials:true
         };
-        debugger;
        const res= util.axiosCall(call);
        res.then((res)=>{
+        debugger;
         if(res?.status==200){
             reactBase.routerReload();
         }
@@ -78,18 +86,22 @@ import ReactBase from '../ReactBase';
       }
     const onChangeCheck= (key:any,value:any)=>{
         onChange(key,value);
-        
+        var text=document.getElementById('UrlInput');
         if(value==true){
-            debugger;
-            var text=document.querySelector("UrlInput");
-            if(text){
-            text.setAttribute("disabled","false");
-            }
-            disabledUrlInput=false;
-        }else disabledUrlInput=true;
-        
+            text!.removeAttribute('disabled');
+        }else text!.setAttribute('disabled','true');
         console.log(form);
       }
+
+    // on load effect
+    if(id!=""){
+        insertData();
+        title="Update Project"
+        updateBtn=false;
+        addBtn=true;
+    }
+    
+    
     
     return(
         <div className='modal' onClick={props.onClose}>
@@ -99,11 +111,15 @@ import ReactBase from '../ReactBase';
         </div>
         <div className='modal-body'>
         <label>Project</label>
-        <input id='NameInput' name="name" defaultValue={props.projectName} onChange={(e)=>onChange(e.target.name,e.target.value)}></input>
+        <input id='NameInput' name="name" defaultValue={props.projectName} placeholder={err.nameErr} onChange={(e)=>onChange(e.target.name,e.target.value)}></input>
+        <div>
         <label>Does it Have URL</label>
-        <input id='checkboxUrl' type="checkbox" name="haveUrl" onChange={(e)=>onChangeCheck(e.target.name,e.target.checked)}></input>
+        <input ref={checkRef} id='checkboxUrl' type="checkbox" name="haveUrl"  onChange={(e)=>onChangeCheck(e.target.name,e.target.checked)}></input>
+        </div>
+        
         <label>url</label>
-        <input id="UrlInput" name="url" disabled={true} onChange={(e)=>onChange(e.target.name,e.target.value)}></input>
+        <input id="UrlInput" ref={urlInput} defaultValue={props.projectUrl} placeholder={err.urlErr} name="url" disabled={disabledUrlInput} onChange={(e)=>onChange(e.target.name,e.target.value)}></input>
+        <p>{err.urlErr}</p>
         <button id="AddBtn" className='modal-deletebtn' hidden={addBtn} onClick={addCall}>Add</button>
         <button id='UpdateBtn' className='modal-deletebtn' onClick={updateCall} hidden={updateBtn}>Update</button>
         </div>

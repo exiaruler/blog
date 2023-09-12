@@ -4,6 +4,7 @@ import ReactBase from '../ReactBase';
  const DeleteModal=(props:any)=>{
     const util=new Util();
     const reactBase=new ReactBase();
+    //debugger;
     const id=props.id;
     var displayItem="";
     if(!props.show){
@@ -19,6 +20,7 @@ import ReactBase from '../ReactBase';
             method:"Delete",
             url:props.http+id,
         };
+        debugger;
        const res= util.axiosCall(call);
        res.then((res)=>{
         if(res?.status==200){

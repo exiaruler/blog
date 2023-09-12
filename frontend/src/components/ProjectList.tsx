@@ -1,7 +1,7 @@
 import React, {  useEffect, useState } from "react";
 import Util from '../api/Util';
 import ReactBase from '../ReactBase';
-
+import ProjectRow from './ProjectRow';
 import AddProject from '../project/addproject';
 import DeleteModal from "../components/DeleteModal";
 import { link } from "fs";
@@ -26,7 +26,7 @@ interface Project{
     });
     const util=new Util();
     const reactBase=new ReactBase();
-
+    var listString="";
     const displayAdminTools=()=>{
       const getUser=util.getUser();
       getUser.then((resp: any)=>{
@@ -85,15 +85,30 @@ interface Project{
         const data=resp?.data;
         setProjects(data);
       });
+      renderList(projects);
     }
+    const renderList=(projectsArr:any)=>{
+      //listString
+      if(projectsArr.length>0){
+        for(var i=0; i<projectsArr.length; i++){
+          var project=projectsArr[i];
+          var row="";
+          //debugger;
+          if(project.url==""){
+            row="<p>"+project.name+"</p> ";
+          }else{
 
+          }
+          listString=row;
+        }
+      }
+    }
     useEffect(() => {
       getProjects();
       displayAdminTools();
     },[]);
     return (
         <div>
-          
             {showProjectTools? <button onClick={()=>openAddModal("","","")}>Add Project</button> :null}
           <AddProject show={addModal} onClose={closeAddModal} projectId={selProject.id} projectName={selProject.name} update={selProject.update}
           projectUrl={selProject.url} />
@@ -101,7 +116,7 @@ interface Project{
             
             <ul className="bodyText" key={project._id}>
             <li>
-            <a href={project.url} aria-disabled="true">{project.name}</a>
+            <ProjectRow name={project.name} url={project.url}/>
             <DeleteModal show={deleteModal} id={selProject.id} http={util.getUrlBase()+"/delete-project/"} item={selProject.name} onClose={closeDeleteModal}/>
             </li>
             {showProjectTools?  <button onClick={()=>openAddModal(project._id,project.name,project.url)}>Update</button> :null}

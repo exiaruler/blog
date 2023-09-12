@@ -11,11 +11,13 @@ import Util from '../api/Util';
   const [bodyError,setBodyError]=useState("");
   const history = useNavigate();
   const [image,setImage]=useState(null);
+  const imgRef=useRef(null)
   const [form,setForm]=useState({
     title:"",
     topic:"",
     user:"",
-    body:""
+    body:"",
+    image:null
   });
   let {id} = useParams();
   const [updateBtn,setUpdateBtn]=useState(false);
@@ -56,10 +58,18 @@ import Util from '../api/Util';
   const onChange= (key:any,value:any)=>{
     setForm({...form,[key]:value});
   }
-  const onInputChangeFile=(e:any)=>{
-    setImage(e.target.files[0]);
-    console.log(image);
+  const onInputChangeFile=(file:any)=>{
+    setImage(file[0]);
+    var ref=imgRef.current!;
+    console.log(ref);
+    onChange("image",file[0]);
+    if(ref){
+      
+      //ref.src=URL.createObjectURL(file[0]);
+    }
+  
   };
+ 
   const update=async ()=>{
     if(user==""){
       history("/login");
@@ -145,8 +155,12 @@ import Util from '../api/Util';
           <div className="column">
         <h1>Blog Entry</h1>
         <div className='column'>
-           <label>Heading</label>
+          <div>
+          <label>Heading</label>
+          </div>
+          <div>
           <input id='title-input' type="text" placeholder={titleError} value={form.title} name="title"  onChange={(e)=> onChange(e.target.name,e.target.value)}/>
+          </div>
           <p>
         <label>topic</label>
         <select name="topic" id='topic-input' value={form.topic}  onChange={(e)=>onChange(e.target.name,e.target.value)}>
@@ -164,8 +178,17 @@ import Util from '../api/Util';
         </p>
         <p>
          <label>Image</label>
-         <input type='file'  onChange={onInputChangeFile} name="image"/> 
+         <input type='file'  onChange={(e)=>onInputChangeFile(e.target.files)} name="image"/> 
         </p>
+        <div>
+        <img
+            id="ImgPreview"
+            ref={imgRef}
+            alt=""
+            width={"250px"}
+            //src={URL.createObjectURL(image)}
+          />
+        </div>
         {postBtn ?
          <input id='PostBtn' value={"Post"} type="submit" onClick={post} ></input>
         :null}
