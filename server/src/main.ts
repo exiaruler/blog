@@ -1,11 +1,12 @@
 import { app } from './index';
 import {UserController} from './controller/UserController';
+require('dotenv').config();
 import * as http from 'http';
 //import * as mongoose from 'mongoose';
 import mongoose from 'mongoose';
-const port = 8000;
+const port = process.env.PORT_HOST;
 const server = http.createServer(app);
-const MONGO_URI = 'mongodb+srv://admin:123@cluster0.l6cgy.mongodb.net/blog?retryWrites=true&w=majority';
+const MONGO_URI = process.env.MONGO_KEY;
 const userControl= new UserController();
 server.listen(port);
 server.on('listening', async () => {
