@@ -41,28 +41,28 @@ import {
       withCredentials: true,
       url:api+page
     };
-      await axios({
-        method: "GET",
-        withCredentials: true,
-        url:api+page
-      }).then((res) => {
-        if(res.data.limit==1){
-          setNextBtn(true);
-        }
-        setPageMax(res.data.limit);
-        setBlogs(res.data.output);
-      });
-    }
-    const handleChange= async (value:number)=>{
-      setPage(value);
-      const currentPage=value;
-      await axios({
-        method: "GET",
-        withCredentials: true,
-        url:api+currentPage
-      }).then((res) => {
-        setBlogs(res.data.output);
-      });
+    /*
+    debugger;
+    const res= util.axiosCall(call);
+    res.then((resp:any)=>{
+      if(resp.data.limit==1){
+        setNextBtn(true);
+      }
+      setPageMax(resp.data.limit);
+      setBlogs(resp.data.output);
+    });
+    */
+    await axios({
+      method: "GET",
+      withCredentials: true,
+      url:api+page
+    }).then((res) => {
+      if(res.data.limit==1){
+        setNextBtn(true);
+      }
+      setPageMax(res.data.limit);
+      setBlogs(res.data.output);
+    });
     }
     
     const getBlogsController = async (event:any) =>{
@@ -82,14 +82,16 @@ import {
           setPrevBtn(true);
        }
       }
-        await axios({
-          method: "GET",
-          withCredentials: true,
-          url:api+currentPage
-        }).then((res) => {
-          setBlogs(res.data.output);
-        });
-      }
+      const call={
+        method: "GET",
+        withCredentials: true,
+        url:api+currentPage
+      };
+      const res= util.axiosCall(call);
+      res.then((resp:any)=>{
+        setBlogs(resp.data.output);
+      });
+    }
     const checkUser = () =>{
     const response=util.getUser();
     response.then((res)=>{
@@ -141,7 +143,7 @@ import {
       {admin ? 
         <button onClick={()=>openDeleteModal(blog.id,blog.title)}>Delete</button>
        :null}
-       <DeleteModal show={deleteModal} id={selectBlog.id} http={"http://localhost:8000/delete-blog/"} item={selectBlog.item} onClose={closeDeleteModal}/>
+       <DeleteModal show={deleteModal} id={selectBlog.id} http={util.getUrlBase()+"/delete-blog/"} item={selectBlog.item} onClose={closeDeleteModal}/>
         {admin ? 
         <button onClick={()=>editEntry(blog.id)} >Update</button>
        :null}

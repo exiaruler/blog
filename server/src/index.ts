@@ -9,6 +9,7 @@ const fileUpload = require('express-fileupload');
 const post=require('./routes/post');
 const user=require('./routes/user');
 const key=require('./routes/keyGen');
+const amiami=require('./routes/amiami');
 const project=require('./routes/project');
 const testRoutes=require('./routes/testRoutes');
 const app = express();
@@ -40,6 +41,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
  app.use(user);
  app.use(key);
  app.use(project);
+ app.use(amiami);
  // testing 
  app.use(testRoutes);
 

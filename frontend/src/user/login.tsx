@@ -38,7 +38,7 @@ import ReactBase from '../ReactBase';
     }
     const loginUser= async (e: { preventDefault: () => void; })=>{
     // e.preventDefault();
-    /*
+    resetError(); 
     const call={
       method:"Post",
       url:util.getUrlBase()+"/login",
@@ -46,7 +46,7 @@ import ReactBase from '../ReactBase';
       withCredentials:true
     };
     const res= util.axiosCall(call);
-       res.then((resp)=>{
+       res.then((resp:any)=>{
         if (resp?.data === "Successfully Authenticated") {
           window.location.href = "/manage"
         }else{
@@ -57,35 +57,7 @@ import ReactBase from '../ReactBase';
          setError(errorData)
         }
        });
-       */
-    resetError();
-     try{
-      await axios({
-        method:"post",
-        data:form,
-        withCredentials:true,
-        url:"http://localhost:8000/login",
-        headers:{
-          apikey:"S7fgxFOTKTK8aCjq"
-        }
-      })
-      .then((res : AxiosResponse) => {
-        if (res.data === "Successfully Authenticated") {
-         window.location.href = "/manage"
-       }else{
-        const errorMsg=res.data;
-        var errorData=util.setJsonValue(error,"userError",errorMsg.userNameError);
-        errorData=util.setJsonValue(error,"passwordError",errorMsg.passwordError);
-        errorData=util.setJsonValue(error,"validationError",errorMsg.loginError);
-        setError(errorData)
-       }
-      }, (err) => {
-        alert(err);
-      })
-    }catch(err){
-      alert(err);
-    }
-      
+       
     };
 
     const checkUser = async () =>{

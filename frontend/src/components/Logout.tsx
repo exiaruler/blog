@@ -10,17 +10,18 @@ import {
 import Util from '../api/Util';
 
 class Logout extends React.Component {
-  private util=new Util();
+    private util=new Util();
      logOut= async () => {
       const call={
-
+        method:"Post",
+        url:this.util.getUrlBase()+"/logout",
+        withCredentials:true
       };
-        await axios({
-          method: "POST",
-          withCredentials: true,
-          url: "http://localhost:8000/logout"
-        }).then((resp)=>console.log(resp));
+      const res=this.util.axiosCall(call);
+       res.then((resp: any)=>{
         window.location.href = "/"
+       });
+
       }
     
     render() {

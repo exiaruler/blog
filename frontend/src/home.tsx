@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Footer from './components/Footer';
 import App from './App';
-
+import Util from './api/Util';
 function Home() {
   const [item, setItems] = useState<any>(null);
  const app=App;
- 
+ const util=new Util();
   const getUser = async () =>{
-    await axios({
-      method: "GET",
-      withCredentials: true,
-      url: "http://localhost:8000/user",
-    }).then((res) => {
-      setItems(res.data);
-    });
+    const call={
+      method:"Get",
+      url:util.getUrlBase()+"/user",
+      withCredentials:true
+    };
+    const res= util.axiosCall(call);
+    res.then((resp:any)=>{
+      setItems(resp.data);
+     });
+    
   }
 
 

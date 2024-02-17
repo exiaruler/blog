@@ -16,17 +16,19 @@ import {
     const util=new Util();
     let {id} = useParams();
     const getBlog = () =>{
-      axios({
-        method: "GET",
-        withCredentials: true,
-        url: "http://localhost:8000/get-a-blog/"+id
-      }).then((res) => {
-       const entry=res.data;
-       const convertDate=util.dateConversionMonth(entry.date);
-       setTitle(entry.title);
-       setDate(convertDate);
-       setBody(entry.body);
-      });
+      const call={
+        method:"GET",
+        url:util.getUrlBase()+"/get-a-blog/"+id,
+        withCredentials:true
+      };
+      const res= util.axiosCall(call);
+       res.then((resp:any)=>{
+        const entry=resp?.data;
+        const convertDate=util.dateConversionMonth(entry.date);
+        setTitle(entry.title);
+        setDate(convertDate);
+        setBody(entry.body);
+       });
     }
     const back=()=>{
       history("/blog");

@@ -35,21 +35,19 @@ function App() {
     }
   }
   const getKey=()=>{
-    try{
-       axios({
+      const call={
         method:"GET",
-        withCredentials:true,
-        url:"http://localhost:8000/get-key"
-      }).then((res)=>{
-        // get cookie
+        url:apiUtil.getUrlBase()+"/get-key",
+        withCredentials:true
+      };
+      const res= apiUtil.axiosCall(call);
+      res.then((resp:any)=>{
         const checkCookie=document.cookie.split('; ').find(row=>row.startsWith('auth'))?.split('=')[1];
         if(checkCookie==undefined){
-        document.cookie="auth="+res.data;
+          document.cookie="auth="+resp.data;
         }
       });
-    }catch(err) {
   }
-}
   const getUser = () =>{
     const response=apiUtil.getUser();
     response.then((res)=>{

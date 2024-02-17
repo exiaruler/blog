@@ -79,7 +79,7 @@ import Util from '../api/Util';
       method:"put",
       data:form,
       withCredentials:true,
-      url:"http://localhost:8000/edit-blog/"+id,
+      url:util.getUrlBase()+"/edit-blog/"+id,
     };
     const res=util.axiosCall(call);
     res.then((resp)=>{
@@ -111,35 +111,36 @@ import Util from '../api/Util';
     }
     var formData=util.setJsonValue(form,"user",user);
     setForm(formData);
-    axios({
-      method:"post",
+    const call={
+      method:"POST",
+      url:util.getUrlBase()+"/add-blog",
       data:form,
-      withCredentials:true,
-      url:"http://localhost:8000/add-blog",
-      
-    }).then((resp)=>{
-      const data=resp.data;
-    if(data=="success"){
-      history("/blog");
-    }else{
-      for(var i=0; i<data.length; i++){
-        var error=data[i];
-        if(error.user){
-          history("/login");
+      withCredentials:true
+    };
+    const res= util.axiosCall(call);
+      res.then((resp:any)=>{
+        const data=resp.data;
+        if(data=="success"){
+          history("/blog");
+        }else{
+          for(var i=0; i<data.length; i++){
+            var error=data[i];
+            if(error.user){
+              history("/login");
+            }
+            if(error.title){
+            setTitleError(error.title);
+            }
+            if(error.topic){
+              setTopicError(error.topic);
+            }
+            if(error.body){
+              setBodyError(error.body);
+            }
+          }
         }
-        if(error.title){
-         setTitleError(error.title);
-        }
-        if(error.topic){
-          setTopicError(error.topic);
-        }
-        if(error.body){
-          setBodyError(error.body);
-        }
-      }
-    }
-    }
-    );
+      });
+    
   };
     useEffect(() => {
       getPost();

@@ -80,8 +80,9 @@ interface Project{
         method:"Get",
         url:util.getUrlBase()+"/get-all-project"
       };
+      debugger;
       const res=util.axiosCall(call);
-      res.then((resp)=>{
+      res.then((resp:any)=>{
         const data=resp?.data;
         setProjects(data);
       });

@@ -26,7 +26,7 @@ router.post('/upload',upload.single("image"),(req, resp: express.Response, next:
   resp.json({ message: 'File uploaded successfully!' })
 });
 
-router.get('/get-all-blog/:page',verifyAccess,async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
+router.get('/get-all-blog/:page',async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     postContr.getAllPost(req,resp);
 });
 

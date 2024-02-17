@@ -51,7 +51,6 @@ import ReactBase from '../ReactBase';
         };
        const res= util.axiosCall(call);
        res.then((resp)=>{
-        debugger;
         if(resp!.data=="success"){
             reactBase.routerReload();
         }else{
