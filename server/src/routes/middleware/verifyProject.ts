@@ -1,11 +1,11 @@
 module.exports =function(req,resp,next){
     var errArr=[];
-    const {name,url,haveUrl}=req.body;
+    const {name,description,url,haveUrl}=req.body;
     var error={
         name:"",
         url:""
     };
-    function verifyProject(name:String,url:String,haveUrl:boolean){
+    function verifyProject(name:String,description:String,url:String,haveUrl:boolean){
         // verify url
         const verifyUrl=url.indexOf("github.com");
         if(verifyUrl==-1&&haveUrl==true){
@@ -18,8 +18,11 @@ module.exports =function(req,resp,next){
         if(name==""){
             error.name="Project name Required";
         }
+        if(description==""){
+            error.name="Project description Required";
+        }
     }
-    verifyProject(name,url,haveUrl);
+    verifyProject(name,description,url,haveUrl);
     if(error.name!=""||error.url!=""){
         next(resp.status(200).json(error));
     }

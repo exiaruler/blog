@@ -14,7 +14,7 @@ class Logout extends React.Component {
      logOut= async () => {
       const call={
         method:"Post",
-        url:this.util.getUrlBase()+"/logout",
+        url:this.util.getUrlBase()+"/user/logout",
         withCredentials:true
       };
       const res=this.util.axiosCall(call);

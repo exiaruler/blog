@@ -41,12 +41,13 @@ import ReactBase from '../ReactBase';
     resetError(); 
     const call={
       method:"Post",
-      url:util.getUrlBase()+"/login",
+      url:util.getUrlBase()+"/user/login",
       data:form,
       withCredentials:true
     };
     const res= util.axiosCall(call);
        res.then((resp:any)=>{
+        debugger;
         if (resp?.data === "Successfully Authenticated") {
           window.location.href = "/manage"
         }else{

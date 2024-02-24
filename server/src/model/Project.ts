@@ -5,6 +5,10 @@ const projectSchema=new Schemea({
         type:String,
         required:true
     },
+    description:{
+        type:String,
+        required:true
+    },
     url:{
         type:String,
     }

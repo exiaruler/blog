@@ -3,9 +3,9 @@ const project=require('../model/Project');
 export class ProjectController{
 
     async createProject(req:Request,res:Response){
-        const {name,url}=req.body;
+        const {name,description,url}=req.body;
         try{
-            const add=await new project({name:name,url:url}).save();
+            const add=await new project({name:name,description:description,url:url}).save();
             if(add){
                 res.status(200).send("success");
             }
@@ -15,9 +15,9 @@ export class ProjectController{
     }
     async updateProject(req:Request,res:Response){
         const id = req.params['id'];
-        const {name,url}=req.body;
+        const {name,description,url}=req.body;
         try{
-            const update=await project.findByIdAndUpdate(id,{name:name,url:url});
+            const update=await project.findByIdAndUpdate(id,{name:name,description:description,url:url});
             if(update){
                 res.status(200).send("success");
             }

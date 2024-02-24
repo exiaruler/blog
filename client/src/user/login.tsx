@@ -44,7 +44,7 @@ import Util from '../api/Util';
         method:"post",
         data:form,
         withCredentials:true,
-        url:"http://localhost:8000/login",
+        url:"http://localhost:8000/user/login",
       })
       .then((res : AxiosResponse) => {
         if (res.data === "Successfully Authenticated") {

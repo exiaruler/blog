@@ -23,16 +23,16 @@ import bcrypt from 'bcrypt';
             res.status(500).send(err.message);
         }
     }
-    async addAdminUser(){
+    async addAdminUser(username:String,password:String){
         var userRole="admin";
-        var username="admin";
-        var password="adminSamuel123";
+       
         try{
-            const find=await user.findOne({username:"admin"}).exec()
+            const find=await user.findOne({username:username}).exec()
             if(!find){
                 const hashPassword=await bcrypt.hash(password,10);
                 const addUser=new user({name:"admin",username:username,password:hashPassword,role:userRole});
                 await addUser.save();
+                console.log("admin added");
             }
         }catch(err){
            

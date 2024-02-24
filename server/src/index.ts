@@ -12,6 +12,7 @@ const key=require('./routes/keyGen');
 const amiami=require('./routes/amiami');
 const project=require('./routes/project');
 const testRoutes=require('./routes/testRoutes');
+const serverRoutes=require('./routes/server');
 const app = express();
 app.use(cors({
     origin: 'http://localhost:3000',
@@ -37,13 +38,14 @@ app.use(bodyparser.urlencoded({ extended: true }));
  app.use(passport.initialize());
  app.use(passport.session());
  //routes
- app.use(post);
- app.use(user);
+ app.use("/project",post);
+ app.use("/user",user);
  app.use(key);
- app.use(project);
- app.use(amiami);
+ app.use("/project",project);
+ app.use("/amiami",amiami);
+ app.use("/server",serverRoutes);
  // testing 
- app.use(testRoutes);
+ app.use("/test",testRoutes);
 
 
 

@@ -20,7 +20,7 @@ class Logout extends React.Component {
         await axios({
           method: "POST",
           withCredentials: true,
-          url: "http://localhost:8000/logout"
+          url: "http://localhost:8000/user/logout"
         }).then((resp)=>console.log(resp));
         window.location.href = "/home"
       }

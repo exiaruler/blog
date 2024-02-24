@@ -10,7 +10,7 @@ function UserComponent() {
        axios({
         method: "GET",
         withCredentials: true,
-        url: "http://localhost:8000/user",
+        url: "http://localhost:8000/user/user",
       }).then((res) => {console.log(res.data);
         //check if user logged in 
        if(res.data!=user){

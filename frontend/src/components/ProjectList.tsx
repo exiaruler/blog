@@ -78,7 +78,7 @@ interface Project{
     const getProjects=()=>{
       const call={
         method:"Get",
-        url:util.getUrlBase()+"/get-all-project"
+        url:util.getUrlBase()+"/project/get-all-project"
       };
       debugger;
       const res=util.axiosCall(call);
@@ -118,7 +118,7 @@ interface Project{
             <ul className="bodyText" key={project._id}>
             <li>
             <ProjectRow name={project.name} url={project.url}/>
-            <DeleteModal show={deleteModal} id={selProject.id} http={util.getUrlBase()+"/delete-project/"} item={selProject.name} onClose={closeDeleteModal}/>
+            <DeleteModal show={deleteModal} id={selProject.id} http={util.getUrlBase()+"/project/delete-project/"} item={selProject.name} onClose={closeDeleteModal}/>
             </li>
             {showProjectTools?  <button onClick={()=>openAddModal(project._id,project.name,project.url)}>Update</button> :null}
             {showProjectTools?  <button onClick={()=>openDeleteModal(project._id,project.name)}>Delete</button> :null}

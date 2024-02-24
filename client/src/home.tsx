@@ -11,7 +11,7 @@ function Home() {
     await axios({
       method: "GET",
       withCredentials: true,
-      url: "http://localhost:8000/user",
+      url: "http://localhost:8000/user/user",
     }).then((res) => {
       setItems(res.data);
     });
