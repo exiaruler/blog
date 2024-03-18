@@ -9,7 +9,7 @@ class Util {
         var res=await axios({
           method: "GET",
           withCredentials: true,
-          url:this.getUrlBase()+"/user",
+          url:this.getUrlBase()+"/user/user",
           headers:{
             apikey:"S7fgxFOTKTK8aCjq",
           }
