@@ -86,7 +86,7 @@ connectMongo(connectionJson:any,start:boolean=false){
  startup(){
    // connect to live if deployed else connect to dev or test
    if(this.liveKey!=""||this.liveKey!=undefined){
-      var connection={
+      var connection:any={
          "name":"live",
          "connection":this.liveKey,
          "adminUser":{

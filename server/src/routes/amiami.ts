@@ -3,6 +3,7 @@ const router=express.Router();
 const verifyAccess="";
 router.post('/get-amiami',(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
     console.log(req.body);
+    /*
     try{
         fetch("https://api.amiami.com/api/v1.0/items?pagemax=50&pagecnt=10&lang=eng&s_keywords=nendoroid&s_sortkey=preowned&s_st_condition_flg=1", {
         method: "GET",
@@ -20,5 +21,10 @@ router.post('/get-amiami',(req: express.Request, resp: express.Response, next: e
         }catch(err){
         resp.send(err);
         }
+        */
 });
 module.exports = router;
+
+function fetch(arg0: string, arg1: { method: string; headers: { "x-user-key": string; "sec-fetch-mode": string; }; }) {
+    throw new Error('Function not implemented.');
+}

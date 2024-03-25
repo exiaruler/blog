@@ -49,7 +49,7 @@ router.delete('/delete-blog/:id',verifyAccess,verifyLogin,async(req: express.Req
 });
 
 router.delete('/delete-all',verifyAccess,async(req: express.Request, resp: express.Response, next: express.NextFunction)=>{
-    blog.remove({},function(err,result){
+    blog.remove({},function(err:any,result:any){
         if(err){ throw err;}
         resp.send(result);
     })

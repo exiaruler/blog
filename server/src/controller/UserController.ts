@@ -19,7 +19,7 @@ import bcrypt from 'bcrypt';
                 }
             }
             res.status(200).send("Username already exists");
-        }catch(err){
+        }catch(err:any){
             res.status(500).send(err.message);
         }
     }
@@ -43,7 +43,7 @@ import bcrypt from 'bcrypt';
             loginError:""
         };
         try{
-            passport.authenticate("local", (err, user) => {
+            passport.authenticate("local", (err:any, user:any) => {
                 if (err) throw err;
                 if (!user){
                     error.loginError="Invalid credentials";
@@ -56,7 +56,7 @@ import bcrypt from 'bcrypt';
                   });
                 }
               })(req, res);
-        }catch(err){
+        }catch(err:any){
             res.status(200).send(err.message);
         }
     }

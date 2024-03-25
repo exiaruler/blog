@@ -1,4 +1,4 @@
-module.exports=function (req, resp, next){
+module.exports=function (req:any, resp:any, next:any){
     const user=req.isAuthenticated();
    
     checkLogin(user);
